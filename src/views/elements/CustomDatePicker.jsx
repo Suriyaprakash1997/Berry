@@ -5,9 +5,9 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import {useState} from 'react';
 import dayjs from 'dayjs';
 const CustomDatePicker=(props)=>{
-    const { OnDateChange, label } = props;
+    const { OnDateChange, label,dateValue } = props;
     const date=Date.now();
-     const [value, setValue] =useState(dayjs(date));
+     const [value, setValue] =useState(dayjs(dateValue));
      function OnValueChange(newValue){
         const formattedDate = newValue.format('YYYY-MM-DD');
         OnDateChange(formattedDate);

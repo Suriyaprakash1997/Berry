@@ -6,11 +6,15 @@ import SubCard from 'ui-component/cards/SubCard';
 import MainCard from 'ui-component/cards/MainCard';
 import { Button,TextField } from '@mui/material';
 import { useState,useEffect } from 'react';
+import Swal from 'sweetalert2';
+import DeleteConfirmDialog from '../elements/DeleteConfirmDialog';
 const Holiday=()=>{
 const[visible,setVisible]=useState(false)
 function Add(){
     setVisible(true)
 }
+
+
 return(
     <>
     {visible&&
@@ -34,7 +38,6 @@ return(
     </MainCard>
      }
     <div className='mt-2'>
-
     </div>
     <MainCard   title="Holiday List" secondary={<Button onClick={()=>Add()} variant='outlined'>Add</Button>}>
 
