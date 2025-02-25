@@ -40,6 +40,7 @@ function Add(){
 }
 function Cancel(){
     setVisible(false)
+    setValues(initialValue);
 }
 const PaginationRequest={
     PageIndex : currentPage,
@@ -107,15 +108,40 @@ const columns = [
   ];
   
  function Edit(data){
-  toast.success("Success")
-   console.log("Data:",data);
+   GetAccountYear(data)
+   .then((res)=>{
+    var data=res.data;
+    
+    setValues(data);
+setVisible(true)
+    
+      })
+      .catch((error)=>{
+    console.log("Errors:",error);
+    
+      })
    
  }
 
  const handleDeleteClick=(type,Id)=>{
-  console.log("Type:",type);
-  console.log("ID:",Id);
-  
+  if(type==="Yes"){
+DeleteAccountYear(Id)
+   .then((res)=>{
+    var data=res.data;
+    if(data.status>0){
+      toast.success(data.message);
+      GetList();
+      }
+      else{
+        toast.error(data.message);
+      }
+    
+      })
+      .catch((error)=>{
+    console.log("Errors:",error);
+    
+      })
+  }
  }
   const handleSortChange = (item) => {
     if(item.length>0){
@@ -154,6 +180,24 @@ function handleCheckInput(event){
   const newData={...values,isActive:check};
   setValues(newData);
 }
+function Save(){
+  SaveAccountYear(values)
+  .then((res)=>{
+var data=res.data;
+if(data.status>0){
+toast.success(data.message);
+setValues(initialValue);
+GetList()
+}
+else{
+  toast.error(data.message);
+}
+  })
+  .catch((error)=>{
+console.log("Errors:",error);
+
+  })
+}
     return(
 
         <>
@@ -180,7 +224,7 @@ function handleCheckInput(event){
 </Grid>
 <Grid container>
 <Grid size={12} className="mt-3 d-flex justify-content-end">
-<Button className='mx-2' variant="contained" color="success">Save</Button>
+<Button onClick={()=>Save()} className='mx-2' variant="contained" color="success">Save</Button>
 
 <Button onClick={()=>Cancel()} variant="contained" color="error">Cancel</Button>
 </Grid>

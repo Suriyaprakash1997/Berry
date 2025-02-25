@@ -6,15 +6,28 @@ import SubCard from 'ui-component/cards/SubCard';
 import MainCard from 'ui-component/cards/MainCard';
 import { Button,TextField } from '@mui/material';
 import { useState,useEffect } from 'react';
-import Swal from 'sweetalert2';
 import DeleteConfirmDialog from '../elements/DeleteConfirmDialog';
+import CustomDatePicker from '../elements/CustomDatePicker';
 const Holiday=()=>{
+    const date=Date.now();
 const[visible,setVisible]=useState(false)
+const initialValue={
+    holidayId:0,
+    holidayName:'',
+    holidayDate:date
+  }
+  const[values,setValues]=useState(initialValue)
 function Add(){
     setVisible(true)
 }
-
-
+const handleEndDateChange=(type)=>{
+    const newData={...values,holidayDate:type};
+    setValues(newData);
+   }
+   function handleInput(event){
+    const newData={...values,[event.target.name]:event.target.value};
+    setValues(newData);
+}
 return(
     <>
     {visible&&
@@ -22,10 +35,13 @@ return(
     <MainCard title="Holiday">
 <Grid container spacing={2}>
 <Grid size={{xs:12,sm:6}}>
-<input type='date' className='form-control'></input>
+<CustomDatePicker dateValue={values.holidayDate} OnDateChange={handleEndDateChange} label="Holiday Date"/>
 </Grid>
 <Grid size={{xs:12,sm:6}}>
-<TextField className='textField' style={{width:'100%'}}  label="Holiday Name" variant="outlined" />
+<TextField className='textField' fullWidth 
+name='holidayName' value={values.holidayName}
+onChange={handleInput}
+ label="Holiday Name" variant="outlined" />
 
 </Grid>
 </Grid>
