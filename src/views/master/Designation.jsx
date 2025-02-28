@@ -90,8 +90,6 @@ else{
         Get(id)
         .then((res)=>{
           var data=res.data;
-          console.log("Data:",res);
-          
           setValues(data)
           formik.setValues(data);
           setVisible(true)
