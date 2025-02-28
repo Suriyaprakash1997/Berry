@@ -9,6 +9,7 @@ const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')))
 //Master
 const AccountYear = Loadable(lazy(() => import('views/master/AccountYear')));
 const Holiday = Loadable(lazy(() => import('views/master/Holiday')));
+const Designation = Loadable(lazy(() => import('views/master/Designation')));
 //Employee
 const Employee = Loadable(lazy(() => import('views/employee/Employee')));
 // utilities routing
@@ -65,6 +66,10 @@ const MainRoutes = {
     {
       path: 'accountYear',
       element: <AccountYear />
+    },
+    {
+      path: 'designation',
+      element: <Designation />
     },
   ]
 };
