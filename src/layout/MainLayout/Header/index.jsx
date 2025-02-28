@@ -9,6 +9,7 @@ import LogoSection from '../LogoSection';
 import SearchSection from './SearchSection';
 import ProfileSection from './ProfileSection';
 import NotificationSection from './NotificationSection';
+import AccountYearComponent from './AccountYearComponent';
 
 import { handlerDrawerOpen, useGetMenuMaster } from 'api/menu';
 
@@ -53,7 +54,7 @@ export default function Header() {
       </Box>
 
       {/* header search */}
-      <SearchSection />
+      <AccountYearComponent />
       <Box sx={{ flexGrow: 1 }} />
       <Box sx={{ flexGrow: 1 }} />
 
