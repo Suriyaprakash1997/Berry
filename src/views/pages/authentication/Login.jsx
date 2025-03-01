@@ -37,7 +37,7 @@ export default function Login() {
                       <Grid>
                         <Stack spacing={1} sx={{ alignItems: 'center', justifyContent: 'center' }}>
                           <Typography gutterBottom variant={downMD ? 'h3' : 'h2'} sx={{ color: 'secondary.main' }}>
-                            Hi, Welcome Back
+                            Hi, Welcome
                           </Typography>
                           <Typography variant="caption" sx={{ fontSize: '16px', textAlign: { xs: 'center', md: 'inherit' } }}>
                             Enter your credentials to continue
@@ -52,20 +52,13 @@ export default function Login() {
                   <Grid size={12}>
                     <Divider />
                   </Grid>
-                  <Grid size={12}>
-                    <Grid container direction="column" sx={{ alignItems: 'center' }} size={12}>
-                      <Typography component={Link} to="/register" variant="subtitle1" sx={{ textDecoration: 'none' }}>
-                        Don&apos;t have an account?
-                      </Typography>
-                    </Grid>
-                  </Grid>
                 </Grid>
               </AuthCardWrapper>
             </Grid>
           </Grid>
         </Grid>
         <Grid sx={{ px: 3, my: 3 }} size={12}>
-          <AuthFooter />
+          {/* <AuthFooter /> */}
         </Grid>
       </Grid>
     </AuthWrapper1>

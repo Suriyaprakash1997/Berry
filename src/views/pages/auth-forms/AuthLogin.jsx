@@ -14,7 +14,8 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-
+import { useNavigate,useLocation } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
 // project imports
 import AnimateButton from 'ui-component/extended/AnimateButton';
 
@@ -26,9 +27,14 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 export default function AuthLogin() {
   const theme = useTheme();
-
+  const currentLocation = useLocation().pathname
+  const navigate=useNavigate()
   const [checked, setChecked] = useState(true);
-
+  const initialValue={
+    username:'',
+    password:''
+  }
+const[values,setValues]=useState(initialValue)
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -37,12 +43,27 @@ export default function AuthLogin() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-
+const handleInput=(event)=>{
+const newData={...values,[event.target.name]:event.target.value};
+setValues(newData);
+}
+function handleSubmit(){
+  toast.success('Login successfully...')
+  setTimeout(() => {
+    navigate('/dashboard')
+  }, 3000);
+}
   return (
     <>
+     <ToastContainer/>
       <FormControl fullWidth sx={{ ...theme.typography.customInput }}>
-        <InputLabel htmlFor="outlined-adornment-email-login">Email Address / Username</InputLabel>
-        <OutlinedInput id="outlined-adornment-email-login" type="email" value="info@codedthemes.com" name="email" inputProps={{}} />
+        <InputLabel >Email Address / Username</InputLabel>
+        <OutlinedInput 
+        type="email" 
+        value={values.username}
+        name="username" 
+        onChange={handleInput}
+         />
       </FormControl>
 
       <FormControl fullWidth sx={{ ...theme.typography.customInput }}>
@@ -50,8 +71,9 @@ export default function AuthLogin() {
         <OutlinedInput
           id="outlined-adornment-password-login"
           type={showPassword ? 'text' : 'password'}
-          value="123456"
+          value={values.password}
           name="password"
+          onChange={handleInput}
           endAdornment={
             <InputAdornment position="end">
               <IconButton
@@ -85,7 +107,9 @@ export default function AuthLogin() {
       </Grid>
       <Box sx={{ mt: 2 }}>
         <AnimateButton>
-          <Button color="secondary" fullWidth size="large" type="submit" variant="contained">
+          <Button color="secondary" fullWidth size="large" 
+          type="submit" variant="contained"
+          onClick={handleSubmit}>
             Sign In
           </Button>
         </AnimateButton>
