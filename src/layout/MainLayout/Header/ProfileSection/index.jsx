@@ -76,7 +76,7 @@ function handleLogout(){
     <>
       <Chip
         sx={{
-          ml: 2,
+          
           height: '48px',
           alignItems: 'center',
           borderRadius: '27px',
@@ -89,8 +89,7 @@ function handleLogout(){
             src={User1}
             alt="user-images"
             sx={{
-              ...theme.typography.mediumAvatar,
-              margin: '8px 0 8px 8px !important',
+              marginRight:"-17px !important",
               cursor: 'pointer'
             }}
             ref={anchorRef}
