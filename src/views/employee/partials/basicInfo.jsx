@@ -1,8 +1,9 @@
 import {useState,useRef,useEffect} from 'react';
 import Box from '@mui/material/Box';
 import {TextField,Card,CardContent,
-    CardHeader ,InputLabel ,
-    MenuItem ,FormControl ,Select
+    CardHeader ,InputLabel ,Switch,
+    MenuItem ,FormControl ,Select,
+    FormControlLabel
  }from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import dayjs from 'dayjs';
@@ -10,6 +11,7 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import CustomTimePicker from '../../elements/CustomTimePicker';
 const basicInfo=()=>{
   const date=Date.now();
     const [age, setAge] = useState('');
@@ -24,6 +26,10 @@ const basicInfo=()=>{
             dateRef.current.style.width = '100% !important';
           }
     },[])
+    function handelTimeChange(name,value){
+console.log(`${name}:`,value);
+
+    }
     return(
         <>
         <Card>
@@ -70,6 +76,15 @@ const basicInfo=()=>{
         <Grid size={{xs: 12,sm: 12, md: 6}}>
         <TextField className='textField' style={{width:'100%'}}  label="Official EMail" variant="outlined" />
         </Grid>
+        <Grid size={{xs: 12,sm: 12, md: 6}}>
+          <CustomTimePicker name='loginTime' label='Login Time'  OnTimeChange={handelTimeChange}/>
+        </Grid>
+        <Grid size={{xs: 12,sm: 12, md: 6}}>
+          <CustomTimePicker name='logoutTime' label='Logout Time' OnTimeChange={handelTimeChange}/>
+        </Grid>
+        <Grid size={{xs: 12,sm: 12, md: 6}}>
+          <CustomTimePicker name='graceTime' label='Grace Time' OnTimeChange={handelTimeChange}/>
+        </Grid>
       </Grid>
 </CardContent>
         </Card>
@@ -100,7 +115,21 @@ const basicInfo=()=>{
         <Grid size={{xs: 12,sm: 12, md: 6}}>
         <TextField  style={{width:'100%'}} label="Voluntory PF" variant="outlined" />
         </Grid>
-       
+        <Grid size={{xs: 12,sm: 12, md: 6}}>
+        <TextField  fullWidth label="Attendance Code" variant="outlined" />
+        </Grid>
+        <Grid size={{xs:12,sm:3}}>
+<FormControlLabel control={<Switch defaultChecked  />} label="Rating by admin" />
+</Grid>
+<Grid size={{xs:12,sm:3}}>
+<FormControlLabel control={<Switch defaultChecked  />} label="Reporting person" />
+</Grid>
+<Grid size={{xs:12,sm:3}}>
+<FormControlLabel control={<Switch defaultChecked  />} label="ESI Eligible" />
+</Grid>
+<Grid size={{xs:12,sm:3}}>
+<FormControlLabel control={<Switch defaultChecked  />} label="Is Relieved" />
+</Grid>
       </Grid>
 </CardContent>
         </Card>

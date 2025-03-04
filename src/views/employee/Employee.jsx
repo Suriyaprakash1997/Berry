@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import {Box,Button} from '@mui/material';
-import BasicInfo from './partials/basicInfo'
+import BasicInfo from './partials/BasicInfo';
+import PersonalInfo from './partials/PersonalInfo';
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
   
@@ -56,7 +57,7 @@ const Employee=()=>{
        <BasicInfo/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Personal
+       <PersonalInfo/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         Profile
