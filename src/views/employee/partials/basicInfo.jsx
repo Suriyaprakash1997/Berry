@@ -12,7 +12,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import CustomTimePicker from '../../elements/CustomTimePicker';
-const basicInfo=()=>{
+const BasicInfo=()=>{
   const date=Date.now();
     const [age, setAge] = useState('');
     const dateRef=useRef();
@@ -136,4 +136,4 @@ console.log(`${name}:`,value);
         </>
     )
 }
-export default basicInfo
+export default BasicInfo

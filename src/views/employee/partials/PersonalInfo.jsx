@@ -9,6 +9,7 @@ import {TextField,Card,CardContent,
  import CustomDatePicker from '../../elements/CustomDatePicker';
  import CustomFileUpload from '../../elements/CustomFileUpload';
 const PersonalInfo=()=>{
+  const [image, setImage] = useState(null);
     const date=Date.now();
     const handleDateChange=(type)=>{
         const newData={...values,startDate:type};
@@ -17,6 +18,20 @@ const PersonalInfo=()=>{
         const [age, setAge] = useState('');
         const handleChange = (event) => {
             setAge(event.target.value);
+          };
+          const handleFileChange = (data) => {
+            const file = data[0]; // Get the file selected
+            if (file) {
+              const reader = new FileReader();
+        
+              // Read the file as a data URL
+              reader.onloadend = () => {
+                setImage(reader.result); // Set the image data URL as state
+              };
+        
+              // Start reading the file
+              reader.readAsDataURL(file);
+            }
           };
     return (
         <>
@@ -50,7 +65,12 @@ const PersonalInfo=()=>{
       </FormControl>
         </Grid>
         <Grid size={{xs: 12,sm: 12, md: 6}}>
-            <CustomFileUpload/>
+            <CustomFileUpload OnFileChange={handleFileChange}/>
+        </Grid>
+        <Grid size={{xs: 12,sm: 12, md: 6}}>
+          {image&&
+            <img src={image} alt="Preview" style={{ width: "200px", height: "auto" }}/>
+          }
         </Grid>
         </Grid>
        </MainCard>

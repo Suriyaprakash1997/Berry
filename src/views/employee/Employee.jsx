@@ -5,6 +5,11 @@ import Tab from '@mui/material/Tab';
 import {Box,Button} from '@mui/material';
 import BasicInfo from './partials/BasicInfo';
 import PersonalInfo from './partials/PersonalInfo';
+import EmergencyContact from './partials/EmergencyContact';
+import EducationInfo from './partials/EducationInfo';
+import BankInfo from './partials/BankInfo';
+import DocumentInfo from './partials/DocumentInfo';
+import SalaryInfo from './partials/SalaryInfo';
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
   
@@ -46,7 +51,7 @@ const Employee=()=>{
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Employee" {...a11yProps(0)} />
           <Tab label="Personal" {...a11yProps(1)} />
-          <Tab label="Profile" {...a11yProps(2)} />
+          <Tab label="Emergency Contact" {...a11yProps(2)} />
           <Tab label="Education" {...a11yProps(3)} />
           <Tab label="Bank" {...a11yProps(4)} />
           <Tab label="Document" {...a11yProps(5)} />
@@ -60,23 +65,23 @@ const Employee=()=>{
        <PersonalInfo/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        Profile
+       <EmergencyContact/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-       Education
+      <EducationInfo/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={4}>
-       Bank
+     <BankInfo/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={5}>
-       Document
+    <DocumentInfo/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={6}>
-       Salary
+      <SalaryInfo/>
       </CustomTabPanel>
-      <div>
-        <Button>Back</Button>
-        <Button>Next</Button>
+      <div className="d-flex justify-content-end">
+        <Button variant='contained'>Back</Button>
+        <Button className='mx-2' variant='contained'>Next</Button>
       </div>
     </Box>
         </>
