@@ -31,6 +31,7 @@ const employee = {
           title: 'Employee List',
           type: 'item',
           url: '/employeeList',
+          breadcrumbs: false
         }
       ]
     }
