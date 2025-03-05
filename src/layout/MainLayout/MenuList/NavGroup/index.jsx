@@ -100,25 +100,23 @@ export default function NavGroup({ item, lastItem, remItems, lastItemId, setSele
     <>
       <List
         disablePadding={!drawerOpen}
-        subheader={
-          currentItem.title &&
-          drawerOpen && (
-            <Typography variant="caption" gutterBottom sx={{ display: 'block', ...theme.typography.menuCaption }}>
-              {currentItem.title}
-              {currentItem.caption && (
-                <Typography variant="caption" gutterBottom sx={{ display: 'block', ...theme.typography.subMenuCaption }}>
-                  {currentItem.caption}
-                </Typography>
-              )}
-            </Typography>
-          )
-        }
+        // subheader={
+        //   drawerOpen && (
+        //     <Typography variant="caption" gutterBottom sx={{ display: 'block', ...theme.typography.menuCaption }}>
+        //       {currentItem.caption && (
+        //         <Typography variant="caption" gutterBottom sx={{ display: 'block', ...theme.typography.subMenuCaption }}>
+        //           {currentItem.caption}
+        //         </Typography>
+        //       )}
+        //     </Typography>
+        //   )
+        // }
       >
         {items}
       </List>
 
       {/* group divider */}
-      {drawerOpen && <Divider sx={{ mt: 0.25, mb: 1.25 }} />}
+      {/* {drawerOpen && <Divider sx={{ mt: 0.25, mb: 1.25 }} />} */}
     </>
   );
 }

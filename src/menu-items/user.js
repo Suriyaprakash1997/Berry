@@ -8,7 +8,7 @@ const icons = {
 
 const user = {
   id: 'users',
-  title: '',
+  title: 'User',
   icon: icons.BrandReact,
   type: 'group',
   children: [
