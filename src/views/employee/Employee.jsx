@@ -43,6 +43,19 @@ const Employee=()=>{
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
+    const handleNext = () => {
+      if (value < 6) {
+        setValue(value + 1);
+        window.scrollTo(0, 0);
+      }
+    };
+  
+    const handleBack = () => {
+      if (value > 0) {
+        setValue(value - 1);
+        window.scrollTo(0, 0);
+      }
+    };
     return(
         <>
         <h3>Employee</h3>
@@ -80,8 +93,26 @@ const Employee=()=>{
       <SalaryInfo/>
       </CustomTabPanel>
       <div className="d-flex justify-content-end">
-        <Button variant='contained'>Back</Button>
-        <Button className='mx-2' variant='contained'>Next</Button>
+        {value!==0 &&(
+          <Button variant='contained' onClick={handleBack} disabled={value === 0}>Back</Button>
+        )}
+           {value!==6 &&(
+ <Button className='mx-2' variant='contained'  onClick={handleNext}
+ disabled={value === 6}>Next</Button>
+)}
+        
+
+       
+             {value === 6 && (
+            <Button
+              variant="contained"
+              style={{ color: 'white' }}
+              color="success"
+              className='mx-2'
+            >
+              Submit
+            </Button>
+          )}
       </div>
     </Box>
         </>

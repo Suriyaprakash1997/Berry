@@ -6,12 +6,16 @@ import Loadable from 'ui-component/Loadable';
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
+//User
+const Role = Loadable(lazy(() => import('views/user/Role')));
+const User = Loadable(lazy(() => import('views/user/User')));
 //Master
 const AccountYear = Loadable(lazy(() => import('views/master/AccountYear')));
 const Holiday = Loadable(lazy(() => import('views/master/Holiday')));
 const Designation = Loadable(lazy(() => import('views/master/Designation')));
 //Employee
 const Employee = Loadable(lazy(() => import('views/employee/Employee')));
+const EmployeeList = Loadable(lazy(() => import('views/employee/EmployeeList')));
 // utilities routing
 const UtilsTypography = Loadable(lazy(() => import('views/utilities/Typography')));
 const UtilsColor = Loadable(lazy(() => import('views/utilities/Color')));
@@ -51,6 +55,10 @@ const MainRoutes = {
       element: <Employee />
     },
     {
+      path: 'employeeList',
+      element: <EmployeeList />
+    },
+    {
       path: 'holiday',
       element: <Holiday />
     },
@@ -61,6 +69,14 @@ const MainRoutes = {
     {
       path: 'designation',
       element: <Designation />
+    },
+    {
+      path: 'role',
+      element: <Role />
+    },
+    {
+      path: 'user',
+      element: <User />
     },
   ]
 };
