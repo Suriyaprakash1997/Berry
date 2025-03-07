@@ -122,12 +122,12 @@ onChange={handleInput}
     <MainCard   title="Holiday List" secondary={<Button onClick={()=>Add()} variant='contained'>Add</Button>}>
 <CustomDataTable 
 columns={columns}
- rows={data}
-  sortModel={sort}
-  TotalCount={totalCount}
- OnPaginationChange={handlePageChange}
- OnEditConfirm={handleEdit}
- OnDeleteConfirm={handleDeleteClick}
+rows={data}
+sortModel={sort}
+TotalCount={totalCount}
+OnPaginationChange={handlePageChange}
+OnEditConfirm={handleEdit}
+OnDeleteConfirm={handleDeleteClick}
   />
 </MainCard>
     </>

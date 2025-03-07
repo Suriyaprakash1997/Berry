@@ -2,7 +2,7 @@
 import {InputLabel ,
     MenuItem ,FormControl ,Select,FormHelperText
  }from '@mui/material';
-const CustomSelect=({ label, items, value, onChange, onBlur, error, helperText, ...props })=>{
+const CustomSelect=({ label, items, value, error, helperText, ...props })=>{
     return(
         <>
         <FormControl fullWidth error={error}>
@@ -10,10 +10,8 @@ const CustomSelect=({ label, items, value, onChange, onBlur, error, helperText, 
         <Select
           labelId={"lbl"+label}
           id={'ddl'+label}
-          label={label}
+           label={label}
           value={value}
-          onChange={onChange}  // Pass the event to Formik's handleChange
-          onBlur={onBlur}  // Pass blur to Formik's handleBlur
           {...props}
         >
            <MenuItem value={0}>---select---</MenuItem>

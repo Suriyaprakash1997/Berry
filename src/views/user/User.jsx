@@ -12,7 +12,7 @@ import {TextField,Button}from '@mui/material';
 
   const validationSchema = yup.object({
     emailId: yup.string().email('Invalid email').required('please enter email'),
-    roleId: yup.number().required("Role is required").positive().integer(),
+    roleId: yup.number().required("please select role").positive("please select role").integer("please select role"),
     password: yup.string().min(8,'password must be 8 character').required('please enter password'),
     confirmPassword: yup.string()
     .min(8,'confirm password must be 8 character')
