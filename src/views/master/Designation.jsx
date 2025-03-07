@@ -179,11 +179,11 @@ else{
           id="designationName"
           name="designationName"
           label="Designation Name"
-          value={formik.values.designationName}
+          value={formik.values.roleName}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.designationName && Boolean(formik.errors.designationName)}
-          helperText={formik.touched.designationName && formik.errors.designationName}
+          error={formik.touched.roleName && Boolean(formik.errors.roleName)}
+          helperText={formik.touched.roleName && formik.errors.roleName}
        
         />
         </Grid>
