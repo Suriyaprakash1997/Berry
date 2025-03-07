@@ -65,7 +65,7 @@ const PersonalInfo=()=>{
       </FormControl>
         </Grid>
         <Grid size={{xs: 12,sm: 12, md: 6}}>
-            <CustomFileUpload OnFileChange={handleFileChange}/>
+            <CustomFileUpload accept="image/*" OnFileChange={handleFileChange}/>
         </Grid>
         <Grid size={{xs: 12,sm: 12, md: 6}}>
           {image&&

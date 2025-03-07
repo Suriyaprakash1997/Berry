@@ -1,7 +1,7 @@
-import { IconKey ,IconUser} from '@tabler/icons-react';
+import { IconUsers} from '@tabler/icons-react';
 // constant
 const icons = {
-  IconKey,IconUser
+  IconUsers
 };
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
@@ -16,7 +16,7 @@ const employee = {
       id: 'Employees',
       title: 'Employee',
       type: 'collapse',
-      icon: icons.IconUser,
+      icon: icons.IconUsers,
       children: [
         {
           id: 'register',
@@ -31,6 +31,13 @@ const employee = {
           title: 'Employee List',
           type: 'item',
           url: '/employeeList',
+          breadcrumbs: false
+        },
+        {
+          id: 'relievedEmployee',
+          title: 'Relieved Employee',
+          type: 'item',
+          url: '/relievedEmployee',
           breadcrumbs: false
         }
       ]

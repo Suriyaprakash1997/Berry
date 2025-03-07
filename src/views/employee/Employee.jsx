@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import {Box,Button} from '@mui/material';
+import MainCard from 'ui-component/cards/MainCard';
 import BasicInfo from './partials/BasicInfo';
 import PersonalInfo from './partials/PersonalInfo';
 import EmergencyContact from './partials/EmergencyContact';
@@ -10,27 +11,7 @@ import EducationInfo from './partials/EducationInfo';
 import BankInfo from './partials/BankInfo';
 import DocumentInfo from './partials/DocumentInfo';
 import SalaryInfo from './partials/SalaryInfo';
-function CustomTabPanel(props) {
-    const { children, value, index, ...other } = props;
-  
-    return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
-        {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-      </div>
-    );
-  }
-  
-  CustomTabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-  };
+import CustomTabPanel from '../elements/CustomTabPanel';
   function a11yProps(index) {
     return {
       id: `simple-tab-${index}`,
@@ -58,7 +39,9 @@ const Employee=()=>{
     };
     return(
         <>
-        <h3>Employee</h3>
+        <MainCard title='Employee'>
+
+     
         <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
@@ -115,6 +98,7 @@ const Employee=()=>{
           )}
       </div>
     </Box>
+    </MainCard>
         </>
     )
 }

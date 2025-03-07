@@ -14,7 +14,7 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
   });
 const CustomFileUpload=(props)=>{
-  const{OnFileChange}=props;
+  const{OnFileChange,accept}=props;
     return (
         <>
          <Button
@@ -28,7 +28,7 @@ const CustomFileUpload=(props)=>{
       <VisuallyHiddenInput
         type="file"
         onChange={(event) => OnFileChange(event.target.files)}
-        accept='image/*'
+        accept={accept}
       />
     </Button>
         </>

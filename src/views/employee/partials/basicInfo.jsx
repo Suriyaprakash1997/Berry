@@ -12,6 +12,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import CustomTimePicker from '../../elements/CustomTimePicker';
+import CustomSelect from '../../elements/CustomSelect';
 const BasicInfo=()=>{
   const date=Date.now();
     const [age, setAge] = useState('');
@@ -30,6 +31,15 @@ const BasicInfo=()=>{
 console.log(`${name}:`,value);
 
     }
+     const handleSelectChange=(name,value)=>{
+    console.log("Name:",name);
+    console.log("value:",value);
+    
+        }
+        const items=[
+          {value:1,text:'Admin'},
+          {value:2,text:'Employee'}
+        ]
     return(
         <>
         <Card>
@@ -58,20 +68,7 @@ console.log(`${name}:`,value);
     </LocalizationProvider>
         </Grid>
         <Grid size={{xs: 12,sm: 12, md: 6}}>
-        <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Designation</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={age}
-          label="Age"
-          onChange={handleChange}
-        >
-          <MenuItem value={1}>Ten</MenuItem>
-          <MenuItem value={2}>Twenty</MenuItem>
-          <MenuItem value={3}>Thirty</MenuItem>
-        </Select>
-      </FormControl>
+       <CustomSelect label='Designation' items={items} name='Designation'OnCustomSelectChange={handleSelectChange}/>
         </Grid>
         <Grid size={{xs: 12,sm: 12, md: 6}}>
         <TextField className='textField' style={{width:'100%'}}  label="Official EMail" variant="outlined" />
@@ -118,15 +115,6 @@ console.log(`${name}:`,value);
         <Grid size={{xs: 12,sm: 12, md: 6}}>
         <TextField  fullWidth label="Attendance Code" variant="outlined" />
         </Grid>
-        <Grid size={{xs:12,sm:3}}>
-<FormControlLabel control={<Switch defaultChecked  />} label="Rating by admin" />
-</Grid>
-<Grid size={{xs:12,sm:3}}>
-<FormControlLabel control={<Switch defaultChecked  />} label="Reporting person" />
-</Grid>
-<Grid size={{xs:12,sm:3}}>
-<FormControlLabel control={<Switch defaultChecked  />} label="ESI Eligible" />
-</Grid>
 <Grid size={{xs:12,sm:3}}>
 <FormControlLabel control={<Switch defaultChecked  />} label="Is Relieved" />
 </Grid>

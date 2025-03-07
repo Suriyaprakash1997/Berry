@@ -1,9 +1,9 @@
 // assets
-import { IconKey,IconFileTypeDoc } from '@tabler/icons-react';
+import { IconFileDescription } from '@tabler/icons-react';
 
 // constant
 const icons = {
-  IconKey,IconFileTypeDoc
+IconFileDescription
 };
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
@@ -11,14 +11,14 @@ const icons = {
 const report = {
   id: 'report',
   title: '',
-  icon: icons.IconFileTypeDoc,
+  icon: icons.IconFileDescription,
   type: 'group',
   children: [
     {
       id: 'ReportsGroup',
       title: 'Reports',
       type: 'collapse',
-      icon: icons.IconFileTypeDoc,
+      icon: icons.IconFileDescription,
       children: [
         {
           id: 'leaveReports',

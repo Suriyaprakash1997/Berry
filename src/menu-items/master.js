@@ -1,24 +1,19 @@
 // assets
-import { IconKey,IconFileTypeDoc } from '@tabler/icons-react';
-
-// constant
-const icons = {
-  IconKey,IconFileTypeDoc
-};
+import { IconBrandCodesandbox } from '@tabler/icons-react';
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
 
 const master = {
   id: 'master',
   title: '',
-  icon: icons.IconFileTypeDoc,
+  icon: IconBrandCodesandbox,
   type: 'group',
   children: [
     {
       id: 'Masters',
       title: 'Master',
       type: 'collapse',
-      icon: icons.IconFileTypeDoc,
+      icon:IconBrandCodesandbox,
       children: [
         {
           id: 'accountYear',
@@ -39,6 +34,34 @@ const master = {
           title: 'Designation',
           type: 'item',
           url: '/designation',
+          breadcrumbs: false
+        },
+        {
+          id: 'jobType',
+          title: 'Job Type',
+          type: 'item',
+          url: '/jobType',
+          breadcrumbs: false
+        },
+        {
+          id: 'leaveType',
+          title: 'Leave Type',
+          type: 'item',
+          url: '/leaveType',
+          breadcrumbs: false
+        },
+        {
+          id: 'permission',
+          title: 'Permission',
+          type: 'item',
+          url: '/permission',
+          breadcrumbs: false
+        },
+        {
+          id: 'penaltyMail',
+          title: 'Penalty Mail',
+          type: 'item',
+          url: '/penaltyMail',
           breadcrumbs: false
         }
       ]
