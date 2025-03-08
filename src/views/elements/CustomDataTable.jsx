@@ -4,7 +4,7 @@ import { TextField } from '@mui/material';
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import DeleteConfirmDialog from './DeleteConfirmDialog';
 const CustomDataTable=(props)=>{
-    const { sortModel, rows,columns,loading,TotalCount,
+    const { sortModel, rows,columns,loading,TotalCount,actionField,
         OnPaginationChange ,OnEditConfirm,OnDeleteConfirm
     } = props;
     const [searchTerm, setSearchTerm] = useState('');
@@ -12,12 +12,12 @@ const CustomDataTable=(props)=>{
     const [sortConfig, setSortConfig] = useState({ column: sortModel.column, state: sortModel.direction });
     const newData = [...columns];
     const objAction= {
-           field: 'holidayId',
+           field: {actionField},
            headerName: 'Action',
            width: 150,
            sortable:false,
            renderCell: (params) => {
-             var Id=params.row.holidayId;
+             var Id=params.row[actionField];
                return (
                    <>
                    <div>

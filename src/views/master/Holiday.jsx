@@ -125,6 +125,7 @@ columns={columns}
 rows={data}
 sortModel={sort}
 TotalCount={totalCount}
+actionField='holidayId'
 OnPaginationChange={handlePageChange}
 OnEditConfirm={handleEdit}
 OnDeleteConfirm={handleDeleteClick}
