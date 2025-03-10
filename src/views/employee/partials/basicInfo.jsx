@@ -1,4 +1,5 @@
 import {useState,useRef,useEffect} from 'react';
+import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import {TextField,Card,CardContent,
     CardHeader ,InputLabel ,Switch,
@@ -13,13 +14,19 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import CustomTimePicker from '../../elements/CustomTimePicker';
 import CustomSelect from '../../elements/CustomSelect';
-const BasicInfo=()=>{
+const BasicInfo=({ basicInfo, setBasicInfo })=>{
   const date=Date.now();
     const [age, setAge] = useState('');
     const dateRef=useRef();
     const [value, setValue] =useState(dayjs(date));
     const handleChange = (event) => {
       setAge(event.target.value);
+    };
+    const handleInputChange = (e) => {
+      setBasicInfo({
+        ...basicInfo,
+        [e.target.name]: e.target.value,
+      });
     };
     useEffect(()=>{
         if (dateRef.current) {
@@ -49,12 +56,22 @@ console.log(`${name}:`,value);
 <CardContent>
 <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         <Grid size={{xs: 12,sm: 12, md: 6}}>
-        <TextField className='textField' style={{width:'100%'}}  label="Employee Code" variant="outlined" />
+        <TextField  
+        label="Employee Code"
+        name='employeeCode'
+        value={basicInfo.employeeCode || ''}
+        onChange={handleInputChange}
+         variant="outlined" />
         </Grid>
         <Grid size={{xs: 12,sm: 12, md: 6}}>
-        <TextField  style={{width:'100%'}} label="Employee Name" variant="outlined" />
+        <TextField 
+        label="Employee Name" 
+        name='employeeName'
+        value={basicInfo.employeeName || ''}
+        onChange={handleInputChange}
+        variant="outlined" />
         </Grid>
-        <Grid size={{xs: 12,sm: 12, md: 6}}>
+        {/* <Grid size={{xs: 12,sm: 12, md: 6}}>
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
@@ -81,11 +98,11 @@ console.log(`${name}:`,value);
         </Grid>
         <Grid size={{xs: 12,sm: 12, md: 6}}>
           <CustomTimePicker name='graceTime' label='Grace Time' OnTimeChange={handelTimeChange}/>
-        </Grid>
+        </Grid> */}
       </Grid>
 </CardContent>
         </Card>
-        <Card style={{marginTop:'10px'}}>
+        {/* <Card style={{marginTop:'10px'}}>
         <CardHeader
     title="PF/ESI Information"
   />
@@ -120,8 +137,12 @@ console.log(`${name}:`,value);
 </Grid>
       </Grid>
 </CardContent>
-        </Card>
+        </Card> */}
         </>
     )
 }
+BasicInfo.propTypes = {
+  basicInfo: PropTypes.object.isRequired,
+  setBasicInfo: PropTypes.func.isRequired,
+};
 export default BasicInfo

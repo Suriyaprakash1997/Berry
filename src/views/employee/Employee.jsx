@@ -20,7 +20,8 @@ import CustomTabPanel from '../elements/CustomTabPanel';
   }
 const Employee=()=>{
     const [value, setValue] = React.useState(0);
-
+    const [basicInfo, setBasicInfo] = React.useState({});
+    const [personalInfo, setPersonalInfo] = React.useState({});
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
@@ -28,6 +29,10 @@ const Employee=()=>{
       if (value < 6) {
         setValue(value + 1);
         window.scrollTo(0, 0);
+      }
+      if(value==0){
+console.log("basicInfo:",basicInfo);
+
       }
     };
   
@@ -55,10 +60,10 @@ const Employee=()=>{
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-       <BasicInfo/>
+       <BasicInfo basicInfo={basicInfo} setBasicInfo={setBasicInfo}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-       <PersonalInfo/>
+       <PersonalInfo />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
        <EmergencyContact/>
