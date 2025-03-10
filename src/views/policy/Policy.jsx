@@ -12,6 +12,8 @@ import { GetPagination,Get,Delete,Save } from '../../services/Master/PolicyServi
  import {useFormik } from 'formik';
  import * as yup from 'yup';
  import { ToastContainer, toast } from 'react-toastify';
+
+ import Swal from 'sweetalert2';
   const validationSchema = yup.object({
      policyName: yup
       .string('please enter policy name')
@@ -136,17 +138,30 @@ const Policy=()=>{
                     flex: 1,
                     sortable:false,
                      renderCell: (params) => {
-                                 var fileName=params.row.policyFileName;
+                      console.log("Params:",params)
+                                 var policyFileArr=params.row.policyFileName.split(',');
+                                 var viewName=filepath+policyFileArr[1];
+                                 var displayName=policyFileArr[0];
                                    return (
                                        <>
                                        <div>
-                                          <a target='_blank' href={filepath+fileName} className=''>{fileName}</a>
+                                          <a target='_blank' onClick={()=>ShowPolicyFile(viewName,displayName)} className=''>{policyFileArr[1]}</a>
                                        </div>
                                        </>
                                    );
                                  },
                   },
                 ];
+                function ShowPolicyFile(url,name){
+                  Swal.fire({
+                    title: name,
+                    text: 'Modal with a custom PDF.',
+                    html: `<iframe src=${url} width="100%" height="100%" frameborder="0"></iframe>`,
+                    width: 700,
+                    padding: '10px',
+                    showConfirmButton: false
+                  });
+                }
     return (
         <>
         <ToastContainer/>
@@ -179,14 +194,14 @@ const Policy=()=>{
 <Grid size={12} className="mt-3 d-flex justify-content-end">
 <SubmitButton/>
 <CancelButton OnClick={Cancel}/>
-
+<Button onClick={()=>Show()} variant='contained'>Show</Button>
 </Grid>
 </Grid>
 </form>
         </MainCard>
 }
                 <div className='mt-2'>
-                <MainCard title='Policy List' secondary={<Button onClick={()=>Add()} variant='contained'>Add</Button>}>
+                <MainCard title='Policy List' secondary={<Button onClick={()=>Add()} variant='contained'>Add</Button> }>
                 <CustomDataTable 
 columns={columns}
 rows={data}

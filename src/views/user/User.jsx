@@ -9,9 +9,11 @@ import {TextField,Button}from '@mui/material';
   import { ToastContainer, toast } from 'react-toastify';
   import CustomSelect from '../elements/CustomSelect';
   import CustomPassword from '../elements/CustomPassword';
-
+  import CustomDataTable from '../elements/CustomDataTable';
+import { GetDropdown } from '../../services/Common/CommonService';
+import { GetPagination,Get,Delete,Save } from '../../services/User/UserService';
   const validationSchema = yup.object({
-    emailId: yup.string().email('Invalid email').required('please enter email'),
+    userName: yup.string().required('please enter user name'),
     roleId: yup.number().required("please select role").positive("please select role").integer("please select role"),
     password: yup.string().min(8,'password must be 8 character').required('please enter password'),
     confirmPassword: yup.string()
@@ -23,22 +25,57 @@ import {TextField,Button}from '@mui/material';
 const User=()=>{
     const[visible,setVisible]=useState(false)
  const[data,setData]=useState([])
+ const[roleDropdown,setRoleDropdown]=useState([])
+ const[model,setModel]=useState({});
+ const[totalCount,setTotalCount]=useState(1);
+ const sort= {column:'userId',direction:'desc'};
      const initialValue={
          roleId:0,
-         emailId:'',
+         userName:'',
          password:'',
          confirmPassword:''
        }
-       const [values,setValues]=useState(initialValue)
            const formik = useFormik({
-               initialValues: values,
+               initialValues: initialValue,
                validationSchema: validationSchema,
                onSubmit: (values) => {
                  console.log("Values:",JSON.stringify(values));
                  
-                 // SaveDesignation(values);
+                 SaveUser(values);
                },
              });
+              function SaveUser(data){
+                         Save(data)
+                         .then((res)=>{
+                           var data=res.data;
+                         if(data.status>0){
+                         toast.success(data.message);
+                         formik.resetForm();
+                         GetList()
+                         }
+                         else{
+                           toast.error(data.message);
+                         }
+                         })
+                         .catch((error)=>{
+                           console.log("Error:",error);
+                           
+                         })
+                       }
+             useEffect(()=>{
+              GetRoleDropdown('Role')
+             },[])
+             const GetRoleDropdown=(mode)=>{
+              GetDropdown(mode)
+              .then((res)=>{
+                    var data=res.data;
+                    setRoleDropdown(data);
+              })
+              .catch((error)=>{
+                console.log("Error:",error);
+                
+              })
+             }
     function Add(){
         setVisible(true)
     }
@@ -46,12 +83,74 @@ const User=()=>{
         setVisible(false)
         formik.resetForm();
     }
-     const items=[
-        {value:1,text:'Admin'},
-        {value:2,text:'Employee'}
-      ]
+     useEffect(()=>{
+          GetList();
+          },[model])
+        function GetList(){
+            GetPagination(model)
+            .then((res)=>{
+                var data=res.data;
+                setData(data.rows)
+                setTotalCount(data.rowsTotal)
+            })
+            .catch((error)=>{
+                console.log("Error:",error); 
+            })
+        }
+        function handlePageChange(model){
+                 setModel(model)
+          }
+           const handleDeleteClick=(type,Id)=>{
+                  if(type==="Yes"){
+                Delete(Id)
+                   .then((res)=>{
+                    var data=res.data;
+                    if(data.status>0){
+                      toast.success(data.message);
+                      GetList();
+                      }
+                      else{
+                        toast.error(data.message);
+                      }
+                    
+                      })
+                      .catch((error)=>{
+                    console.log("Errors:",error);
+                    
+                      })
+                  }
+                 }
+                 function handleEdit(id){
+                      Get(id)
+                             .then((res)=>{
+                               var data=res.data;
+                               formik.setValues(data);
+                               formik.values.confirmPassword=data.password;
+                               setVisible(true)
+                               window.scrollTo(0, 0);
+                                 })
+                                 .catch((error)=>{
+                               console.log("Errors:",error);
+                               
+                                 })
+                 }
+                 const columns = [
+                  { field: 'indexID',  width: 150, headerName: 'S.No',sortable:false},
+                  {
+                    field: 'userName',
+                    headerName: 'User Name',
+                    flex: 1,
+                  },
+                  {
+                    field: 'roleName',
+                    headerName: 'Role Name',
+                    flex: 1,
+                  },
+                 
+                ];
     return (
         <>
+        <ToastContainer/>
           {visible&&
         <MainCard title='User'>
             <form onSubmit={formik.handleSubmit} autoComplete='off'>
@@ -60,21 +159,21 @@ const User=()=>{
 <input type='hidden'  name="userId" value={formik.values.userId}/>
 <TextField
           fullWidth
-          id="emailId"
-          name="emailId"
-          label="Email Id"
-          value={formik.values.emailId}
+          id="userName"
+          name="userName"
+          label="User Name"
+          value={formik.values.userName}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.emailId && Boolean(formik.errors.emailId)}
-          helperText={formik.touched.emailId && formik.errors.emailId}
+          error={formik.touched.userName && Boolean(formik.errors.userName)}
+          helperText={formik.touched.userName && formik.errors.userName}
        
         />
 </Grid>
 <Grid size={{xs:12,sm:6}}>
 <CustomSelect 
 label='Role' 
-items={items} 
+items={roleDropdown} 
 name='roleId'
 value={formik.values.roleId}  // Pass the value from Formik
 onChange={formik.handleChange}  // Handle change via Formik's handleChange
@@ -116,7 +215,16 @@ helperText={formik.touched.roleId && formik.errors.roleId}  />
 }
                 <div className='mt-2'>
                 <MainCard title='User List' secondary={<Button onClick={()=>Add()} variant='contained'>Add</Button>}>
-        
+                <CustomDataTable 
+columns={columns}
+rows={data}
+sortModel={sort}
+TotalCount={totalCount}
+actionField='userId'
+OnPaginationChange={handlePageChange}
+OnEditConfirm={handleEdit}
+OnDeleteConfirm={handleDeleteClick}
+  />
         </MainCard>
                 </div>
         </>
