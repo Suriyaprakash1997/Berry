@@ -71,7 +71,7 @@ console.log(`${name}:`,value);
         onChange={handleInputChange}
         variant="outlined" />
         </Grid>
-        {/* <Grid size={{xs: 12,sm: 12, md: 6}}>
+        <Grid size={{xs: 12,sm: 12, md: 6}}>
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
@@ -98,7 +98,7 @@ console.log(`${name}:`,value);
         </Grid>
         <Grid size={{xs: 12,sm: 12, md: 6}}>
           <CustomTimePicker name='graceTime' label='Grace Time' OnTimeChange={handelTimeChange}/>
-        </Grid> */}
+        </Grid>
       </Grid>
 </CardContent>
         </Card>

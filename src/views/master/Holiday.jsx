@@ -6,32 +6,58 @@ import CustomDatePicker from '../elements/CustomDatePicker';
 import CustomDataTable from '../elements/CustomDataTable';
 import { GetPagination,Get,Delete,Save } from '../../services/Master/HolidayService';
 import { ToastContainer, toast } from 'react-toastify';
+import {  useFormik } from 'formik';
+import dayjs from 'dayjs';
+import * as yup from 'yup';
+const validationSchema = yup.object({
+  holidayName: yup.string('please enter holiday name').required('please enter holiday name'),
+  holidayDate: yup.date('Invalid date format').required('Holiday date is required').
+  nullable().typeError('Invalid date format')
+});
 const Holiday=()=>{
 const date=Date.now();
 const[visible,setVisible]=useState(false)
 const initialValue={
     holidayId:0,
     holidayName:'',
-    holidayDate:date
+    holidayDate:dayjs(date)
   }
-  const[values,setValues]=useState(initialValue)
   const[model,setModel]=useState({});
   const[data,setData]=useState([]);
   const[totalCount,setTotalCount]=useState(1);
   const sort= {column:'holidayId',direction:'desc'};
+     const formik = useFormik({
+          initialValues: initialValue,
+          validationSchema: validationSchema,
+          onSubmit: (values) => {
+            const formattedDate = values.holidayDate.format('YYYY-MM-DD');
+            values.holidayDate = formattedDate;
+            SaveHoliday(values);
+          },
+        });
+         const SaveHoliday=(data)=>{
+             Save(data)
+                 .then((res)=>{
+                    var data=res.data;
+                     if(data.status>0){
+                        toast.success(data.message);
+                        GetList()
+                        Cancel()
+                      }
+                      else{
+                        toast.error(data.message);
+                      }
+                  })
+                  .catch((error)=>{
+                    console.log("Error:",error);                       
+                   })
+           }
 function Add(){
     setVisible(true)
 }
 function Cancel(){
     setVisible(false)
-}
-const handleEndDateChange=(type)=>{
-    const newData={...values,holidayDate:type};
-    setValues(newData);
-   }
-   function handleInput(event){
-    const newData={...values,[event.target.name]:event.target.value};
-    setValues(newData);
+    formik.setValues(initialValue)
 }
 useEffect(()=>{
 GetList();
@@ -46,9 +72,6 @@ function GetList(){
     .catch((error)=>{
         console.log("Error:",error); 
     })
-}
-function Edit(id){
-alert("ID:"+id)
 }
 const columns = [
     { field: 'indexID',  width: 150, headerName: 'S.No',sortable:false},
@@ -88,33 +111,63 @@ const columns = [
               })
           }
          }
-         function handleEdit(id){
-alert("ParentComponent:"+id);
-         }
+        function handleEdit(id){
+          Get(id)
+            .then((res)=>{
+              var data=res.data;
+              data.holidayDate=dayjs(data.holidayDate);
+              formik.setValues(data);
+              setVisible(true)
+              window.scrollTo(0, 0);
+            })
+            .catch((error)=>{
+              console.log("Errors:",error);
+                                       
+            })
+        }
 return(
     <>
     <ToastContainer/>
     {visible&&
    
     <MainCard title="Holiday">
-<Grid container spacing={2}>
+
+        <form onSubmit={formik.handleSubmit}>
+        <Grid container spacing={2}>
+<input type='hidden'  name="holidayId" value={formik.values.holidayId}/>
 <Grid size={{xs:12,sm:6}}>
-<CustomDatePicker dateValue={values.holidayDate} OnDateChange={handleEndDateChange} label="Holiday Date"/>
+<CustomDatePicker 
+label='Holiday Date' 
+name='holidayDate'
+value={formik.values.holidayDate && dayjs(formik.values.holidayDate)}
+onChange={(newValue) => formik.setFieldValue('holidayDate', newValue)}
+onBlur={formik.handleBlur}
+error={formik.touched.holidayDate && Boolean(formik.errors.holidayDate)} 
+helperText={formik.touched.holidayDate && formik.errors.holidayDate}
+/>
 </Grid>
 <Grid size={{xs:12,sm:6}}>
-<TextField className='textField' fullWidth 
-name='holidayName' value={values.holidayName}
-onChange={handleInput}
- label="Holiday Name" variant="outlined" />
+<TextField fullWidth
+          id="holidayName"
+          name="holidayName"
+          label="Holiday Name"
+          value={formik.values.holidayName}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.holidayName && Boolean(formik.errors.holidayName)}
+          helperText={formik.touched.holidayName && formik.errors.holidayName} />
 
 </Grid>
 </Grid>
 <Grid container>
 <Grid size={12} className="mt-3 d-flex justify-content-end">
 <Button color="primary" variant="contained"  type="submit" >Save</Button>
-<Button className='mx-2' onClick={()=>Cancel()} color="error" variant="contained"  type="button">Cancel</Button>
+<Button className='mx-2' 
+onClick={() => Cancel()}
+ color="error" variant="contained"  type="button">Cancel</Button>
 </Grid>
 </Grid>
+        </form>
     </MainCard>
      }
     <div className='mt-2'>

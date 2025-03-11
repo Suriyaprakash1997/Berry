@@ -2,28 +2,25 @@
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import {useState} from 'react';
-import dayjs from 'dayjs';
-const CustomDatePicker=(props)=>{
-    const { OnDateChange, label,dateValue } = props;
-    const date=Date.now();
-     const [value, setValue] =useState(dayjs(dateValue));
-     function OnValueChange(newValue){
-        const formattedDate = newValue.format('YYYY-MM-DD');
-        OnDateChange(formattedDate);
-        setValue(newValue)
-     }
+import {FormHelperText }from '@mui/material';
+const CustomDatePicker=({value, error, helperText,onChange, ...props })=>{
+    const handleDateChange = (newDate) => {
+        if (newDate && newDate.isValid()) {
+            onChange(newDate);  // Pass the valid dayjs object to the parent
+          }
+      };
     return(
         <>
          <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
-          label={label}
           value={value}
+          onChange={handleDateChange} 
           format='DD-MM-YYYY'
-          onChange={(newValue) => OnValueChange(newValue)}
+          {...props}
+         
         />
-
     </LocalizationProvider>
+    {error && <FormHelperText>{helperText}</FormHelperText>}
         </>
     )
 }

@@ -12,7 +12,7 @@ const CustomDataTable=(props)=>{
     const [sortConfig, setSortConfig] = useState({ column: sortModel.column, state: sortModel.direction });
     const newData = [...columns];
     const objAction= {
-           field: {actionField},
+           field: actionField,
            headerName: 'Action',
            width: 150,
            sortable:false,
