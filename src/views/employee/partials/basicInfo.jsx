@@ -14,28 +14,38 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import CustomTimePicker from '../../elements/CustomTimePicker';
 import CustomSelect from '../../elements/CustomSelect';
+import CustomDatePicker from '../../elements/CustomDatePicker';
 const BasicInfo=({ basicInfo, setBasicInfo })=>{
   const date=Date.now();
     const [age, setAge] = useState('');
     const dateRef=useRef();
     const [value, setValue] =useState(dayjs(date));
+    const [dateValue, setDateValue] =useState(dayjs(date));
     const handleChange = (event) => {
       setAge(event.target.value);
     };
+    const initialValue={
+      employeeCode:'',
+      employeeName:'',
+      dateOfJoin:dayjs(date),
+      designation:0,
+      officialEmail:'',
+      loginTime:dayjs(date),
+      logoutTime:dayjs(date),
+      graceTime:dayjs(date)
+
+    }
+    const initialDesignation = basicInfo.designation || 0;
     const handleInputChange = (e) => {
       setBasicInfo({
         ...basicInfo,
         [e.target.name]: e.target.value,
       });
     };
-    useEffect(()=>{
-        if (dateRef.current) {
-            // Apply styles using the ref directly
-            dateRef.current.style.width = '100% !important';
-          }
-    },[])
     function handelTimeChange(name,value){
 console.log(`${name}:`,value);
+const formattedDate = value.format('HH:mm')
+setBasicInfo({...basicInfo,[name]: value});
 
     }
      const handleSelectChange=(name,value)=>{
@@ -47,6 +57,9 @@ console.log(`${name}:`,value);
           {value:1,text:'Admin'},
           {value:2,text:'Employee'}
         ]
+        function handleDateChange(name ,value){
+           setBasicInfo({...basicInfo, [name]: value});
+        }
     return(
         <>
         <Card>
@@ -72,32 +85,46 @@ console.log(`${name}:`,value);
         variant="outlined" />
         </Grid>
         <Grid size={{xs: 12,sm: 12, md: 6}}>
-
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker
-        inputRef={dateRef}
-          label="Date of Join"
-          value={value}
-          format='DD-MM-YYYY'
-          onChange={(newValue) => setValue(newValue)}
-        />
-
-    </LocalizationProvider>
+        <CustomDatePicker 
+            label='Date of Join' 
+            name='dateOfJoin'
+            value={basicInfo.dateOfJoin}
+            onChange={(newValue) => handleDateChange('dateOfJoin', newValue)}
+            />
         </Grid>
         <Grid size={{xs: 12,sm: 12, md: 6}}>
-       <CustomSelect label='Designation' items={items} name='Designation'OnCustomSelectChange={handleSelectChange}/>
+       <CustomSelect label='Designation' 
+       items={items}
+        name='designation'
+        value={initialDesignation}
+       onChange={handleInputChange}/>
         </Grid>
         <Grid size={{xs: 12,sm: 12, md: 6}}>
-        <TextField className='textField' style={{width:'100%'}}  label="Official EMail" variant="outlined" />
+        <TextField  
+        label="Official EMail" 
+        name='officialEmail'
+        value={basicInfo.officialEmail || ''}
+        onChange={handleInputChange}
+        variant="outlined" />
         </Grid>
         <Grid size={{xs: 12,sm: 12, md: 6}}>
-          <CustomTimePicker name='loginTime' label='Login Time'  OnTimeChange={handelTimeChange}/>
+          <CustomTimePicker 
+          name='loginTime'
+          label='Login Time' 
+          value={basicInfo.loginTime}
+          OnTimeChange={(newValue) => handelTimeChange('loginTime', newValue)}
+          />
         </Grid>
         <Grid size={{xs: 12,sm: 12, md: 6}}>
-          <CustomTimePicker name='logoutTime' label='Logout Time' OnTimeChange={handelTimeChange}/>
+          <CustomTimePicker   
+           value={basicInfo.logoutTime} 
+           name='logoutTime' label='Logout Time'
+           OnTimeChange={(newValue) => handelTimeChange('logoutTime', newValue)}/>
         </Grid>
         <Grid size={{xs: 12,sm: 12, md: 6}}>
-          <CustomTimePicker name='graceTime' label='Grace Time' OnTimeChange={handelTimeChange}/>
+          <CustomTimePicker  value={basicInfo.graceTime} name='graceTime' 
+          label='Grace Time' 
+          OnTimeChange={(newValue) => handelTimeChange('graceTime', newValue)}/>
         </Grid>
       </Grid>
 </CardContent>
