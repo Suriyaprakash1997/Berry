@@ -7,8 +7,35 @@ import {TextField,Button,CardContent,
     FormControlLabel
  }from '@mui/material';
  import { DataGrid } from '@mui/x-data-grid';
-const EmergencyContact=()=>{
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+ import SubmitButton from '../../elements/SubmitButton';
+ import CancelButton from '../../elements/CancelButton';
+const validationSchema = yup.object({
+  name: yup.string('please enter name').required('please enter  name'),
+  relation: yup.string('please enter relation').required('please enter  relation'),
+  phone: yup.string('please enter phone').required('please enter  phone'),
+  address: yup.string('please enter address').required('please enter  address'),
+});
+const EmergencyContact=({ emergencyInfo, setEmergencyInfo })=>{
+ 
     const [data,setData]=useState([])
+const initialValue={
+  contactId:0,
+  name:'',
+  relation:'',
+  phone:'',
+  address:''
+}
+      const formik = useFormik({
+                   initialValues: initialValue,
+                   validationSchema: validationSchema,
+                   onSubmit: (values) => {
+                    console.log("Data:",JSON.stringify(values));
+                    
+                     //SaveRole(values);
+                   },
+                 });
     const columns = [
         { field: 'indexID', headerName: 'S.No'},
         {
@@ -36,27 +63,70 @@ const EmergencyContact=()=>{
     return(
         <>
         <MainCard title='Emergency Contact'>
+          <form onSubmit={formik.handleSubmit} autoComplete='off'>
         <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <input type='hidden'  name="contactId" value={formik.values.contactId}/>
         <Grid size={{xs: 12,sm: 12, md: 6}}>
-        <TextField className='textField' fullWidth  label="Name" variant="outlined" />
+          <TextField
+                    fullWidth
+                    id="name"
+                    name="name"
+                    label="Name"
+                    value={formik.values.name}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.name && Boolean(formik.errors.name)}
+                    helperText={formik.touched.name && formik.errors.name}
+                 
+                  />
         </Grid>
         <Grid size={{xs: 12,sm: 12, md: 6}}>
-        <TextField className='textField' fullWidth  label="Relation" variant="outlined" />
+        <TextField
+                    fullWidth
+                    id="relation"
+                    name="relation"
+                    label="Relation"
+                    value={formik.values.relation}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.relation && Boolean(formik.errors.relation)}
+                    helperText={formik.touched.relation && formik.errors.relation}
+                  />
         </Grid>
         <Grid size={{xs: 12,sm: 12, md: 6}}>
-        <TextField className='textField' fullWidth  label="Phone" variant="outlined" />
+              <TextField
+                    fullWidth
+                    id="phone"
+                    name="phone"
+                    label="Phone"
+                    value={formik.values.phone}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.phone && Boolean(formik.errors.phone)}
+                    helperText={formik.touched.phone && formik.errors.phone}
+                  />
         </Grid>
         <Grid size={{xs: 12,sm: 12, md: 6}}>
-        <TextField className='textField' fullWidth  label="Address" variant="outlined" />
+        <TextField
+                    fullWidth
+                    id="address"
+                    name="address"
+                    label="Address"
+                    value={formik.values.address}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.address && Boolean(formik.errors.address)}
+                    helperText={formik.touched.address && formik.errors.address}
+                  />
         </Grid>
         </Grid>
         <Grid container>
 <Grid size={12} className="mt-3 d-flex justify-content-end">
-<Button  className='mx-2' variant="contained" color="success">Save</Button>
-
-<Button  variant="contained" color="error">Cancel</Button>
+<SubmitButton/>
+<CancelButton OnClick={()=>{formik.resetForm()}}/>
 </Grid>
 </Grid>
+</form>
         </MainCard>
         <div className='mt-3'>
 <DataGrid

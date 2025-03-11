@@ -8,33 +8,11 @@ import {TextField,Card,CardContent,
  }from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import dayjs from 'dayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import CustomTimePicker from '../../elements/CustomTimePicker';
 import CustomSelect from '../../elements/CustomSelect';
 import CustomDatePicker from '../../elements/CustomDatePicker';
 const BasicInfo=({ basicInfo, setBasicInfo })=>{
   const date=Date.now();
-    const [age, setAge] = useState('');
-    const dateRef=useRef();
-    const [value, setValue] =useState(dayjs(date));
-    const [dateValue, setDateValue] =useState(dayjs(date));
-    const handleChange = (event) => {
-      setAge(event.target.value);
-    };
-    const initialValue={
-      employeeCode:'',
-      employeeName:'',
-      dateOfJoin:dayjs(date),
-      designation:0,
-      officialEmail:'',
-      loginTime:dayjs(date),
-      logoutTime:dayjs(date),
-      graceTime:dayjs(date)
-
-    }
     const initialDesignation = basicInfo.designation || 0;
     const handleInputChange = (e) => {
       setBasicInfo({

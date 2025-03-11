@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useState}from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -19,9 +19,14 @@ import CustomTabPanel from '../elements/CustomTabPanel';
     };
   }
 const Employee=()=>{
-    const [value, setValue] = React.useState(0);
-    const [basicInfo, setBasicInfo] = React.useState({});
-    const [personalInfo, setPersonalInfo] = React.useState({});
+    const [value, setValue] = useState(0);
+    const [basicInfo, setBasicInfo] = useState({});
+    const [personalInfo, setPersonalInfo] = useState({});
+    const [emergencyInfo, setEmergencyInfo] = useState({});
+    const [educationInfo, setEducationInfo] = useState({});
+    const [bankInfo, setBankInfo] = useState({});
+    const [documentInfo, setDocumentInfo] = useState({});
+    const [salaryInfo, setSalaryInfo] = useState({});
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
@@ -31,8 +36,10 @@ const Employee=()=>{
         window.scrollTo(0, 0);
       }
       if(value==0){
-console.log("basicInfo:",basicInfo);
-
+         console.log("basicInfo:",basicInfo);
+      }
+      if(value==1){
+        console.log("personalInfo:",personalInfo);
       }
     };
   
@@ -42,11 +49,14 @@ console.log("basicInfo:",basicInfo);
         window.scrollTo(0, 0);
       }
     };
+    const handleSubmit=()=>{
+      var newObject={...basicInfo,...personalInfo,...bankInfo}
+      console.log("FinalObj:",newObject);
+      
+    }
     return(
         <>
         <MainCard title='Employee'>
-
-     
         <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
@@ -63,7 +73,7 @@ console.log("basicInfo:",basicInfo);
        <BasicInfo basicInfo={basicInfo} setBasicInfo={setBasicInfo}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-       <PersonalInfo />
+       <PersonalInfo personalInfo={personalInfo} setPersonalInfo={setPersonalInfo} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
        <EmergencyContact/>
@@ -72,7 +82,7 @@ console.log("basicInfo:",basicInfo);
       <EducationInfo/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={4}>
-     <BankInfo/>
+     <BankInfo bankInfo={bankInfo} setBankInfo={setBankInfo}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={5}>
     <DocumentInfo/>
@@ -88,15 +98,13 @@ console.log("basicInfo:",basicInfo);
  <Button className='mx-2' variant='contained'  onClick={handleNext}
  disabled={value === 6}>Next</Button>
 )}
-        
-
-       
              {value === 6 && (
             <Button
               variant="contained"
               style={{ color: 'white' }}
               color="success"
               className='mx-2'
+              onClick={handleSubmit}
             >
               Submit
             </Button>
