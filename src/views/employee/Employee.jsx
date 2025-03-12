@@ -1,8 +1,5 @@
 import {useState}from 'react';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import {Box,Button} from '@mui/material';
+import {Box,Button,Tabs,Tab} from '@mui/material';
 import MainCard from 'ui-component/cards/MainCard';
 import BasicInfo from './partials/BasicInfo';
 import PersonalInfo from './partials/PersonalInfo';
@@ -22,7 +19,7 @@ const Employee=()=>{
     const [value, setValue] = useState(0);
     const [basicInfo, setBasicInfo] = useState({});
     const [personalInfo, setPersonalInfo] = useState({});
-    const [emergencyInfo, setEmergencyInfo] = useState({});
+    const [emergencyInfo, setEmergencyInfo] = useState([]);
     const [educationInfo, setEducationInfo] = useState({});
     const [bankInfo, setBankInfo] = useState({});
     const [documentInfo, setDocumentInfo] = useState({});
@@ -76,7 +73,7 @@ const Employee=()=>{
        <PersonalInfo personalInfo={personalInfo} setPersonalInfo={setPersonalInfo} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-       <EmergencyContact/>
+       <EmergencyContact emergencyInfo={emergencyInfo}setEmergencyInfo={setEmergencyInfo}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
       <EducationInfo/>

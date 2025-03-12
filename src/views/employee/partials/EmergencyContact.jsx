@@ -11,10 +11,10 @@ import { useFormik } from 'formik';
  import SubmitButton from '../../elements/SubmitButton';
  import CancelButton from '../../elements/CancelButton';
  import { EmergencyContactValidator } from '../../../validation/EmployeeValidation';
-
+import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
+import DeleteConfirmDialog from '../../elements/DeleteConfirmDialog';
 const EmergencyContact=({ emergencyInfo, setEmergencyInfo })=>{
- 
-    const [data,setData]=useState([])
+const [data,setData]=useState(emergencyInfo)
 const initialValue={
   contactId:0,
   name:'',
@@ -22,39 +22,95 @@ const initialValue={
   phone:'',
   address:''
 }
-      const formik = useFormik({
-                   initialValues: initialValue,
-                   validationSchema: EmergencyContactValidator,
-                   onSubmit: (values) => {
-                    console.log("Data:",JSON.stringify(values));
-                    
-                     //SaveRole(values);
-                   },
-                 });
+const formik = useFormik({
+   initialValues: initialValue,
+   validationSchema: EmergencyContactValidator,
+   onSubmit: (values) => {
+      console.log("Data:",JSON.stringify(values));
+      SaveEmergencyContact(values)
+      formik.resetForm()
+      //SaveRole(values);
+    },
+  });
+function SaveEmergencyContact(values){
+  if(values.contactId===0){
+    values.contactId=Math.floor((Math.random()*100)+1)
+  }
+  else{
+    const selectedIndex=data.findIndex(a=>a.contactId===values.contactId)
+    if(selectedIndex>=0){
+     const newData = data.filter(item => item.contactId !== values.contactId); 
+     setData(newData);
+    }
+  }
+  setData(prevData => {
+    const newData = [...prevData, values];
+    setEmergencyInfo(newData);
+    return newData;
+  });
+  }
+  function Edit(Id){
+    const newData = data.find(item => item.contactId === Id); 
+    formik.setValues(newData)
+  }
+  function handleDeleteClick(type,Id){
+    console.log(`Type:${type}, Id:${Id}`);
+    if(type==='Yes'){
+       const selectedIndex=data.findIndex(a=>a.contactId===Id)
+       if(selectedIndex>=0){
+        const newData = data.filter(item => item.contactId !== Id); 
+        setData(newData);
+        setEmergencyInfo(newData);
+       }
+    }
+    
+ }
     const columns = [
-        { field: 'indexID', headerName: 'S.No'},
-        {
-          field: 'accountYearName',
+        
+          {
+            field: 'contactId',
+            headerName: 'Action',
+            width:100,
+            sortable:false,
+            renderCell: (params) => {
+              var Id=params.row.contactId;
+                return (
+                    <>
+                    <div >
+                       <ModeEditOutlineIcon onClick={()=>(Edit(Id))}  className='mx-1 cursor_Pointer' color='primary'/>
+                       <DeleteConfirmDialog Id={Id} onConfirm={handleDeleteClick}/>
+                    </div>
+                    </>
+                );
+              },
+          },
+           {
+          field: 'name',
           headerName: 'Name',
           flex: 1,
+          minWidth:200
         },
         {
-          field: 'startDate',
-          headerName: 'Contact No',
-          flex: 1,
+          field: 'relation',
+          headerName: 'Relation',
+          width:150,
         },
         {
-            field: 'endDate',
+          field: 'phone',
+          headerName: 'Phone',
+          width:150,
+        },
+        {
+            field: 'address',
             headerName: 'Address',
-            flex: 1,
+            width:200,
           },  
-          {
-            field: 'action',
-            headerName: 'Action',
-            flex: 1,
-          },  
+        
        
       ];
+      const rows=[
+        {"contactId":66,"name":"d","relation":"d","phone":"d","address":"d"}
+      ]
     return(
         <>
         <MainCard title='Emergency Contact'>
@@ -124,9 +180,24 @@ const initialValue={
 </form>
         </MainCard>
         <div className='mt-3'>
-<DataGrid
+       <DataGrid
         rows={data}
         columns={columns}
+        getRowId={(row) => row.contactId}
+        sortingOrder={['asc', 'desc']}
+        disableRowSelectionOnClick
+        disableColumnResize={true}
+        disableColumnMenu={true}
+        hideFooterPagination={true}
+        
+        sx={{
+          '& .MuiDataGrid-cell:focus': {
+            outline: 'none',
+          },
+          '& .MuiDataGrid-cell.Mui-selected': {
+            border: 'none',
+          },
+        }}
       />
 </div>
         </>
