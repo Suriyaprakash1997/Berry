@@ -35,12 +35,15 @@ const Employee=()=>{
         setValue(value + 1);
         window.scrollTo(0, 0);
       }
-      if(value==0){
-         console.log("basicInfo:",basicInfo);
-      }
-      if(value==1){
-        console.log("personalInfo:",personalInfo);
-      }
+      // if(value==0){
+      //    console.log("basicInfo:",basicInfo);
+      // }
+      // if(value==1){
+      //   console.log("personalInfo:",personalInfo);
+      // }
+      // if(value===3){
+      //   console.log("educationInfo:",educationInfo);
+      // }
     };
   
     const handleBack = () => {

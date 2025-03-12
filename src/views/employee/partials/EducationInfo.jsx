@@ -43,9 +43,6 @@ const EducationInfo=({ educationInfo, setEducationInfo })=>{
         initialValues:experienceValue,
         validationSchema: ExperienceValidator,
         onSubmit: (values) => {
-           console.log("Exp Data:",JSON.stringify(values));
-           values.fromDate=values.fromDate.format('DD-MM-YYYY');
-           values.toDate=values.toDate.format('DD-MM-YYYY');
            SaveExperienceDetails(values)
            expFormik.resetForm()
          },
@@ -55,30 +52,32 @@ const EducationInfo=({ educationInfo, setEducationInfo })=>{
           values.educationId=Math.floor((Math.random()*100)+1)
         }
         else{
-          const selectedIndex=data.findIndex(a=>a.educationId===values.educationId)
+          const selectedIndex=educationInfo.educationDetails.findIndex(a=>a.educationId===values.educationId)
           if(selectedIndex>=0){
-           const newData = data.filter(item => item.educationId !== values.educationId); 
+           const newData = educationInfo.educationDetails.filter(item => item.educationId !== values.educationId); 
            newData.push(values);
-           setData(newData);
+           setEducationInfo({ ...educationInfo, educationDetails: newData });
            return
           }
         }
-        setData([...data, values]);
+        const updatedData = [...educationInfo.educationDetails, values];
+        setEducationInfo({ ...educationInfo, educationDetails: updatedData });
         }
         function SaveExperienceDetails(values){
           if(values.experienceId===0){
             values.experienceId=Math.floor((Math.random()*100)+1)
           }
           else{
-            const selectedIndex=expData.findIndex(a=>a.experienceId===values.experienceId)
+            const selectedIndex=educationInfo.experienceDetails.findIndex(a=>a.experienceId===values.experienceId)
             if(selectedIndex>=0){
-             const newData = expData.filter(item => item.experienceId !== values.experienceId); 
+             const newData = educationInfo.experienceDetails.filter(item => item.experienceId !== values.experienceId); 
              newData.push(values);
-             setExpData(newData);
+             setEducationInfo({ ...educationInfo, experienceDetails: newData });
              return
             }
           }
-          setExpData([...expData, values]);
+          const updatedData = [...educationInfo.experienceDetails, values];
+          setEducationInfo({ ...educationInfo, experienceDetails: updatedData });
           }
         const educationColumns = [
         
@@ -145,11 +144,27 @@ const EducationInfo=({ educationInfo, setEducationInfo })=>{
           field: 'fromDate',
           headerName: 'From Date',
           width:150,
+          renderCell: (params) => {
+            var fromDate=params.row.fromDate;
+              return (
+                  <>
+                 {fromDate.format('DD-MM-YYYY')}
+                  </>
+              );
+            },
         },
         {
           field: 'toDate',
           headerName: 'To Date',
           width:150,
+          renderCell: (params) => {
+            var toDate=params.row.toDate;
+              return (
+                  <>
+                 {toDate.format('DD-MM-YYYY')}
+                  </>
+              );
+            },
         },
         {
             field: 'companyName',
@@ -174,29 +189,28 @@ const EducationInfo=({ educationInfo, setEducationInfo })=>{
           }, 
       ];
       function EditEducation(Id){
-        const newData = data.find(item => item.educationId === Id); 
+        const newData =  educationInfo.educationDetails.find(item => item.educationId === Id); 
         formik.setValues(newData)
       }
       function handleDeleteClick(type,Id){
         if(type==='Yes'){
-           const selectedIndex=data.findIndex(a=>a.educationId===Id)
+           const selectedIndex=educationInfo.educationDetails.findIndex(a=>a.educationId===Id)
            if(selectedIndex>=0){
-            const newData = data.filter(item => item.educationId !== Id); 
-            setData(newData);
+            const newData = educationInfo.educationDetails.filter(item => item.educationId !== Id); 
+            setEducationInfo({ ...educationInfo, educationDetails: newData });
            }
         }
      }
      function EditExperience(Id){
-      const newData = expData.find(item => item.experienceId === Id); 
-      console.log("EditData:",newData)
+      const newData = educationInfo.experienceDetails.find(item => item.experienceId === Id); 
       expFormik.setValues(newData)
     }
     function handleExperienceDeleteClick(type,Id){
       if(type==='Yes'){
-         const selectedIndex=expData.findIndex(a=>a.experienceId===Id)
+         const selectedIndex=educationInfo.experienceDetails.findIndex(a=>a.experienceId===Id)
          if(selectedIndex>=0){
-          const newData = data.filter(item => item.experienceId !== Id); 
-          setData(newData);
+          const newData = educationInfo.experienceDetails.filter(item => item.experienceId !== Id); 
+          setEducationInfo({ ...educationInfo, experienceDetails: newData });
          }
       }
    }
@@ -256,7 +270,7 @@ const EducationInfo=({ educationInfo, setEducationInfo })=>{
 </form>
     <div className='mt-4'>
  <DataGrid
-            rows={data}
+            rows={educationInfo.educationDetails}
             columns={educationColumns}
             getRowId={(row) => row.educationId}
             sortingOrder={['asc', 'desc']}
@@ -347,7 +361,7 @@ const EducationInfo=({ educationInfo, setEducationInfo })=>{
 </form>
     <div className='mt-4'>
     <DataGrid
-            rows={expData}
+            rows={educationInfo.experienceDetails}
             columns={experienceColumns}
             getRowId={(row) => row.experienceId}
             sortingOrder={['asc', 'desc']}
