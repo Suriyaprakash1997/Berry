@@ -20,7 +20,10 @@ const Employee=()=>{
     const [basicInfo, setBasicInfo] = useState({});
     const [personalInfo, setPersonalInfo] = useState({});
     const [emergencyInfo, setEmergencyInfo] = useState([]);
-    const [educationInfo, setEducationInfo] = useState({});
+    const [educationInfo, setEducationInfo] = useState({
+      educationDetails:[],
+      experienceDetails:[]
+    });
     const [bankInfo, setBankInfo] = useState({});
     const [documentInfo, setDocumentInfo] = useState({});
     const [salaryInfo, setSalaryInfo] = useState({});
@@ -76,7 +79,7 @@ const Employee=()=>{
        <EmergencyContact emergencyInfo={emergencyInfo}setEmergencyInfo={setEmergencyInfo}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-      <EducationInfo/>
+      <EducationInfo educationInfo={educationInfo}setEducationInfo={setEducationInfo}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={4}>
      <BankInfo bankInfo={bankInfo} setBankInfo={setBankInfo}/>

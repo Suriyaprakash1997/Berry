@@ -1,11 +1,7 @@
 import {useState,useRef,useEffect} from 'react';
 import Grid from '@mui/material/Grid2';
 import MainCard from 'ui-component/cards/MainCard';
-import {TextField,Button,CardContent,
-    CardHeader ,InputLabel ,Switch,
-    MenuItem ,FormControl ,Select,
-    FormControlLabel
- }from '@mui/material';
+import {TextField}from '@mui/material';
  import { DataGrid } from '@mui/x-data-grid';
 import { useFormik } from 'formik';
  import SubmitButton from '../../elements/SubmitButton';
@@ -26,10 +22,8 @@ const formik = useFormik({
    initialValues: initialValue,
    validationSchema: EmergencyContactValidator,
    onSubmit: (values) => {
-      console.log("Data:",JSON.stringify(values));
       SaveEmergencyContact(values)
       formik.resetForm()
-      //SaveRole(values);
     },
   });
 function SaveEmergencyContact(values){
@@ -54,7 +48,6 @@ function SaveEmergencyContact(values){
     formik.setValues(newData)
   }
   function handleDeleteClick(type,Id){
-    console.log(`Type:${type}, Id:${Id}`);
     if(type==='Yes'){
        const selectedIndex=data.findIndex(a=>a.contactId===Id)
        if(selectedIndex>=0){
@@ -63,7 +56,6 @@ function SaveEmergencyContact(values){
         setEmergencyInfo(newData);
        }
     }
-    
  }
     const columns = [
         
@@ -108,9 +100,6 @@ function SaveEmergencyContact(values){
         
        
       ];
-      const rows=[
-        {"contactId":66,"name":"d","relation":"d","phone":"d","address":"d"}
-      ]
     return(
         <>
         <MainCard title='Emergency Contact'>

@@ -16,5 +16,6 @@ export const EmergencyContactValidator = yup.object({
   export const ExperienceValidator = yup.object({
     companyName: yup.string().required('Please enter a company name'),
     designation: yup.string().required('Please enter a  designation'),
-    contactName: yup.string().required('Please enter a contact name'),
+    contactNo: yup.string().required('Please enter a contact no'),
+    contactEmail: yup.string().required('Please enter a contact email'),
   });
