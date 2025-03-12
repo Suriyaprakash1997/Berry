@@ -1,20 +1,14 @@
 import {useState,useRef,useEffect} from 'react';
 import Grid from '@mui/material/Grid2';
 import MainCard from 'ui-component/cards/MainCard';
-import {TextField,Button
- }from '@mui/material';
- import { useFormik } from 'formik';
- import * as yup from 'yup';
- import SubmitButton from '../elements/SubmitButton';
- import CancelButton from '../elements/CancelButton';
- import { ToastContainer, toast } from 'react-toastify';
- import CustomDataTable from '../elements/CustomDataTable';
- import { GetPagination,Get,Delete,Save } from '../../services/User/RoleService';
- const validationSchema = yup.object({
-    roleName: yup
-     .string('please enter role name')
-     .required('please enter role name'),
- });
+import {TextField,Button}from '@mui/material';
+import { useFormik } from 'formik';
+import SubmitButton from '../elements/SubmitButton';
+import CancelButton from '../elements/CancelButton';
+import { ToastContainer, toast } from 'react-toastify';
+import CustomDataTable from '../elements/CustomDataTable';
+import { GetPagination,Get,Delete,Save } from '../../services/User/RoleService';
+import {roleValidator} from '../../validation/UserValidation'
 const Role=()=>{
     const[visible,setVisible]=useState(false)
     const[data,setData]=useState([])
@@ -28,7 +22,7 @@ const Role=()=>{
       const [values,setValues]=useState(initialValue)
           const formik = useFormik({
               initialValues: values,
-              validationSchema: validationSchema,
+              validationSchema: roleValidator,
               onSubmit: (values) => {
                 SaveRole(values);
               },

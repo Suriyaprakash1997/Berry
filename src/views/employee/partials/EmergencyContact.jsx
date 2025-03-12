@@ -8,15 +8,10 @@ import {TextField,Button,CardContent,
  }from '@mui/material';
  import { DataGrid } from '@mui/x-data-grid';
 import { useFormik } from 'formik';
-import * as yup from 'yup';
  import SubmitButton from '../../elements/SubmitButton';
  import CancelButton from '../../elements/CancelButton';
-const validationSchema = yup.object({
-  name: yup.string('please enter name').required('please enter  name'),
-  relation: yup.string('please enter relation').required('please enter  relation'),
-  phone: yup.string('please enter phone').required('please enter  phone'),
-  address: yup.string('please enter address').required('please enter  address'),
-});
+ import { EmergencyContactValidator } from '../../../validation/EmployeeValidation';
+
 const EmergencyContact=({ emergencyInfo, setEmergencyInfo })=>{
  
     const [data,setData]=useState([])
@@ -29,7 +24,7 @@ const initialValue={
 }
       const formik = useFormik({
                    initialValues: initialValue,
-                   validationSchema: validationSchema,
+                   validationSchema: EmergencyContactValidator,
                    onSubmit: (values) => {
                     console.log("Data:",JSON.stringify(values));
                     

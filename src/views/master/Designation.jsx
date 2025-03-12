@@ -1,6 +1,5 @@
 import { useState,useEffect } from 'react';
 import { useFormik } from 'formik';
-import * as yup from 'yup';
 import { Button,TextField } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import MainCard from 'ui-component/cards/MainCard';
@@ -9,11 +8,7 @@ import DeleteConfirmDialog from '../elements/DeleteConfirmDialog';
 import { GetPagination,Get,Delete,Save } from '../../services/Master/DesignationService';
 import { DataGrid } from '@mui/x-data-grid';
 import { ToastContainer, toast } from 'react-toastify';
-const validationSchema = yup.object({
-  designationName: yup
-    .string('please enter designation')
-    .required('please enter designation'),
-});
+import { designationValidator } from '../../validation/MasterValidation';
 const Designation=()=>{
   const[visible,setVisible]=useState(false)
   const initialValue={
@@ -36,7 +31,7 @@ function Cancel(){
 }
     const formik = useFormik({
         initialValues: values,
-        validationSchema: validationSchema,
+        validationSchema: designationValidator,
         onSubmit: (values) => {
           SaveDesignation(values);
         },

@@ -2,25 +2,16 @@ import {useState,useRef,useEffect} from 'react';
 import Grid from '@mui/material/Grid2';
 import MainCard from 'ui-component/cards/MainCard';
 import {TextField,Button}from '@mui/material';
-  import { useFormik } from 'formik';
-  import * as yup from 'yup';
-  import SubmitButton from '../elements/SubmitButton';
-  import CancelButton from '../elements/CancelButton';
-  import { ToastContainer, toast } from 'react-toastify';
-  import CustomSelect from '../elements/CustomSelect';
-  import CustomPassword from '../elements/CustomPassword';
-  import CustomDataTable from '../elements/CustomDataTable';
+import { useFormik } from 'formik';
+import SubmitButton from '../elements/SubmitButton';
+import CancelButton from '../elements/CancelButton';
+import { ToastContainer, toast } from 'react-toastify';
+import CustomSelect from '../elements/CustomSelect';
+import CustomPassword from '../elements/CustomPassword';
+import CustomDataTable from '../elements/CustomDataTable';
 import { GetDropdown } from '../../services/Common/CommonService';
 import { GetPagination,Get,Delete,Save } from '../../services/User/UserService';
-  const validationSchema = yup.object({
-    userName: yup.string().required('please enter user name'),
-    roleId: yup.number().required("please select role").positive("please select role").integer("please select role"),
-    password: yup.string().min(8,'password must be 8 character').required('please enter password'),
-    confirmPassword: yup.string()
-    .min(8,'confirm password must be 8 character')
-    .required('please enter confirm password')
-    .oneOf([yup.ref('password'), null], 'passwords mis match'),
-  });
+import {userValidator} from '../../validation/UserValidation'
 
 const User=()=>{
     const[visible,setVisible]=useState(false)
@@ -37,7 +28,7 @@ const User=()=>{
        }
            const formik = useFormik({
                initialValues: initialValue,
-               validationSchema: validationSchema,
+               validationSchema: userValidator,
                onSubmit: (values) => {
                  console.log("Values:",JSON.stringify(values));
                  

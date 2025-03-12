@@ -8,12 +8,7 @@ import { GetPagination,Get,Delete,Save } from '../../services/Master/HolidayServ
 import { ToastContainer, toast } from 'react-toastify';
 import {  useFormik } from 'formik';
 import dayjs from 'dayjs';
-import * as yup from 'yup';
-const validationSchema = yup.object({
-  holidayName: yup.string('please enter holiday name').required('please enter holiday name'),
-  holidayDate: yup.date('Invalid date format').required('Holiday date is required').
-  nullable().typeError('Invalid date format')
-});
+import { holidayValidator } from '../../validation/MasterValidation';
 const Holiday=()=>{
 const date=Date.now();
 const[visible,setVisible]=useState(false)
@@ -28,7 +23,7 @@ const initialValue={
   const sort= {column:'holidayId',direction:'desc'};
      const formik = useFormik({
           initialValues: initialValue,
-          validationSchema: validationSchema,
+          validationSchema: holidayValidator,
           onSubmit: (values) => {
             const formattedDate = values.holidayDate.format('YYYY-MM-DD');
             values.holidayDate = formattedDate;
