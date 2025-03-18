@@ -1,15 +1,18 @@
 import React from 'react';
+import { Button, TextField } from '@mui/material';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
 const FileUploadForm = () => {
   // Initial form values
   const initialValues = {
+    phone:'',
     file: null,
   };
 
   // Yup validation schema
   const validationSchema = Yup.object({
+    phone:Yup.string().required('please enter phone'),
     file: Yup.mixed()
       .required('A file is required')
       .test('fileSize', 'File size is too large', (value) => {
@@ -27,8 +30,7 @@ const FileUploadForm = () => {
   };
 
   return (
-    <div>
-      <h1>File Upload Form</h1>
+  
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -36,9 +38,21 @@ const FileUploadForm = () => {
       >
         {({ setFieldValue, values }) => (
           <Form>
-            <div>
-              <label htmlFor="file">Upload File:</label>
+            <div className='row'>
+<div className='col-4'>
+ <TextField
+                    fullWidth
+                    id="phone"
+                    name="phone"
+                    label="Phone"
+                    onChange={(e) => setFieldValue('phone', e.currentTarget.value)}
+                    
+                  />
+                   <ErrorMessage name="phone" component="div" style={{ color: 'red' }} />
+</div>
+<div className='col-4'>
               <input
+              className='form-control'
                 type="file"
                 id="file"
                 name="file"
@@ -46,19 +60,22 @@ const FileUploadForm = () => {
               />
               <ErrorMessage name="file" component="div" style={{ color: 'red' }} />
             </div>
+            <div className='col-4'>
+              <Button type='submit' variant='outlined'>Submit</Button>
+            </div>
+            </div>
+  
             {values.file && (
               <div>
                 <p>Selected File: {values.file.name}</p>
                 <p>File Size: {(values.file.size / 1024).toFixed(2)} KB</p>
               </div>
             )}
-            <div>
-              <button type="submit">Submit</button>
-            </div>
+          
           </Form>
         )}
       </Formik>
-    </div>
+ 
   );
 };
 

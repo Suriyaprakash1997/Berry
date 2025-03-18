@@ -1,4 +1,3 @@
-import {useState,useRef,useEffect} from 'react';
 import Grid from '@mui/material/Grid2';
 import MainCard from 'ui-component/cards/MainCard';
 import {TextField,Switch,FormControlLabel}from '@mui/material';
@@ -13,8 +12,6 @@ import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import DeleteConfirmDialog from '../../elements/DeleteConfirmDialog';
 const EducationInfo=({ educationInfo, setEducationInfo })=>{
   var date=Date.now()
-    const [data,setData]=useState(educationInfo.educationDetails)
-    const [expData,setExpData]=useState(educationInfo.experienceDetails)
     const educationValue={
       educationId:0,
       educationName:'',

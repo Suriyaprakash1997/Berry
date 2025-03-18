@@ -25,7 +25,7 @@ const Employee=()=>{
       experienceDetails:[]
     });
     const [bankInfo, setBankInfo] = useState({});
-    const [documentInfo, setDocumentInfo] = useState({});
+    const [documentInfo, setDocumentInfo] = useState([]);
     const [salaryInfo, setSalaryInfo] = useState({});
     const handleChange = (event, newValue) => {
       setValue(newValue);
@@ -44,6 +44,9 @@ const Employee=()=>{
       // if(value===3){
       //   console.log("educationInfo:",educationInfo);
       // }
+      if(value===5){
+        console.log("documentInfo:",documentInfo);
+      }
     };
   
     const handleBack = () => {
@@ -88,7 +91,7 @@ const Employee=()=>{
      <BankInfo bankInfo={bankInfo} setBankInfo={setBankInfo}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={5}>
-    <DocumentInfo/>
+    <DocumentInfo documentInfo={documentInfo} setDocumentInfo={setDocumentInfo}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={6}>
       <SalaryInfo/>

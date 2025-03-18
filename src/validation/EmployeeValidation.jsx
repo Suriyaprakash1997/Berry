@@ -19,3 +19,13 @@ export const EmergencyContactValidator = yup.object({
     contactNo: yup.string().required('Please enter a contact no'),
     contactEmail: yup.string().required('Please enter a contact email'),
   });
+
+  export const DocumentValidator = yup.object({
+    documentType: yup.string().required('Please enter a document type'),
+    documentFile: yup.mixed()
+      .required('A file is required')
+      .test('fileSize', 'File size is too large', (value) => {
+        return value && value.size <= 5 * 1024 * 1024; // 2MB limit
+      })
+   
+  });
