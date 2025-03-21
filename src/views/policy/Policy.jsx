@@ -194,7 +194,6 @@ const Policy=()=>{
 <Grid size={12} className="mt-3 d-flex justify-content-end">
 <SubmitButton/>
 <CancelButton OnClick={Cancel}/>
-<Button onClick={()=>Show()} variant='contained'>Show</Button>
 </Grid>
 </Grid>
 </form>

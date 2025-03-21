@@ -14,6 +14,8 @@ const AccountYear = Loadable(lazy(() => import('views/master/AccountYear')));
 const Holiday = Loadable(lazy(() => import('views/master/Holiday')));
 const Designation = Loadable(lazy(() => import('views/master/Designation')));
 const JobType = Loadable(lazy(() => import('views/master/JobType')));
+const LeaveType = Loadable(lazy(() => import('views/master/LeaveType')));
+const Permission = Loadable(lazy(() => import('views/master/Permission')));
 const Policy = Loadable(lazy(() => import('views/policy/Policy')));
 //Employee
 const Employee = Loadable(lazy(() => import('views/employee/Employee')));
@@ -87,6 +89,14 @@ const MainRoutes = {
     {
       path: 'jobType',
       element: <JobType />
+    },
+    {
+      path: 'leaveType',
+      element: <LeaveType />
+    },
+    {
+      path: 'permission',
+      element: <Permission />
     },
   ]
 };
