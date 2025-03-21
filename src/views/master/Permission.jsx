@@ -29,6 +29,7 @@ const Permission=()=>{
                         var data=res.data;
                          if(data.status>0){
                             toast.success(data.message);
+                            location.reload()
                           }
                           else{
                             toast.error(data.message);
