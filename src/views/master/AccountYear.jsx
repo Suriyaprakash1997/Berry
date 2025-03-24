@@ -214,7 +214,7 @@ console.log("Errors:",error);
 
 </Grid>
 <Grid size={{xs:12,sm:6}}>
-<FormControlLabel control={<Switch defaultChecked={values.isActive} onChange={handleCheckInput} />} label="Is Active" />
+<FormControlLabel control={<Switch checked={values.isActive} onChange={handleCheckInput} />} label="Is Active" />
 </Grid>
 </Grid>
 <Grid container>
