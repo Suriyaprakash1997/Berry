@@ -138,7 +138,6 @@ const Policy=()=>{
                     flex: 1,
                     sortable:false,
                      renderCell: (params) => {
-                      console.log("Params:",params)
                                  var policyFileArr=params.row.policyFileName.split(',');
                                  var viewName=filepath+policyFileArr[1];
                                  var displayName=policyFileArr[0];

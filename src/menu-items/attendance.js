@@ -21,21 +21,18 @@ const attendance = {
           title: 'Leave List',
           type: 'item',
           url: '/leaveList',
-          breadcrumbs: false
         },
         {
           id: 'permissionList',
           title: 'Permission List',
           type: 'item',
           url: '/permissionList',
-          breadcrumbs: false
         },
         {
           id: 'penaltyList',
           title: 'Penalty List',
           type: 'item',
           url: '/penaltyList',
-          breadcrumbs: false
         }
       ]
     }

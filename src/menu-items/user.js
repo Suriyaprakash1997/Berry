@@ -9,7 +9,6 @@ const icons = {
 const user = {
   id: 'users',
   title: 'User',
-  icon: icons.BrandReact,
   type: 'group',
   children: [
     {
@@ -23,22 +22,24 @@ const user = {
           title: 'Role',
           type: 'item',
           url: '/role',
-          icon: icons.IconPalette,
-          breadcrumbs: false
         },
         {
           id: 'user_add',
           title: 'User',
           type: 'item',
           url: '/user',
-          breadcrumbs: false
+        },
+        {
+          id: 'role_Form',
+          title: 'Role Form',
+          type: 'item',
+          url: '/roleForm',
         },
         {
             id: 'role_Permission',
             title: 'Role Permission',
             type: 'item',
             url: '/rolepermission',
-            breadcrumbs: false
           }
       ]
     }

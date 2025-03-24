@@ -114,12 +114,11 @@ const JobType=()=>{
               jobType:values.jobType?values.jobType:''
              }}
              validationSchema={jobTypeValidator}
-             onSubmit={(values, { resetForm }) => {
-             console.log("values:",values);
+             onSubmit={(values) => {
              SaveLeaveType(values);
             }}
   >
-    {({setFieldValue, values,resetForm})=>(
+    {({setFieldValue, values})=>(
       <Form>
 <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
 <input type='hidden'  name="jobTypeId" value={values.jobTypeId}/>

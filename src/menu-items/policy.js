@@ -7,7 +7,6 @@ import { IconFiles } from '@tabler/icons-react';
 
 const policy = {
   id: 'policy',
-  title: '',
   type: 'group',
   children: [
     {
@@ -16,7 +15,6 @@ const policy = {
       type: 'item',
       url: '/policy',
       icon: IconFiles,
-      breadcrumbs: false
     }
   ]
 };

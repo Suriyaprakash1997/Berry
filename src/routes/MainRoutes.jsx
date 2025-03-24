@@ -9,6 +9,7 @@ const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')))
 //User
 const Role = Loadable(lazy(() => import('views/user/Role')));
 const User = Loadable(lazy(() => import('views/user/User')));
+const RoleForm = Loadable(lazy(() => import('views/user/RoleForm')));
 //Master
 const AccountYear = Loadable(lazy(() => import('views/master/AccountYear')));
 const Holiday = Loadable(lazy(() => import('views/master/Holiday')));
@@ -81,6 +82,10 @@ const MainRoutes = {
     {
       path: 'user',
       element: <User />
+    },
+    {
+      path: 'roleForm',
+      element: <RoleForm />
     },
     {
       path: 'policy',
