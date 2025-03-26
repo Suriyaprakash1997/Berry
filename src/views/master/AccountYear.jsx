@@ -4,6 +4,7 @@ import { Button,TextField,Checkbox,
     FormGroup ,FormControlLabel ,Switch 
   } from '@mui/material';
 import { useState,useEffect } from 'react';
+import {  useFormik } from 'formik';
 import { DataGrid } from '@mui/x-data-grid';
 import { GetPagination,
   GetAccountYear,DeleteAccountYear,
@@ -79,8 +80,12 @@ const columns = [
         headerName: 'Is Active',
         flex: 1,
         renderCell: (params) => {
-            return    <Switch  disabled defaultChecked={params.value} />;
-          },
+          return (
+              <>
+             <Switch   checked={params.row.isActive || false} />
+              </>
+          );
+        },
       },
    
       {
@@ -253,14 +258,6 @@ console.log("Errors:",error);
             pageSize: itemsPerPage,
           }}
           disableRowSelectionOnClick
-          // sx={{
-          //   '& .MuiDataGrid-cell:focus': {
-          //     outline: 'none',
-          //   },
-          //   '& .MuiDataGrid-cell.Mui-selected': {
-          //     border: 'none',
-          //   },
-          // }}
       />
 </div>
         

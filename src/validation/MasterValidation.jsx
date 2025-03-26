@@ -1,5 +1,10 @@
 import * as yup from 'yup';
 
+export const accountYearValidator = yup.object({
+  accountYearName: yup
+    .string('please enter account year name')
+    .required('please enter account year name'),
+});
 export const designationValidator = yup.object({
   designationName: yup
     .string('please enter designation')
