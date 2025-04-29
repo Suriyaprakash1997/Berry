@@ -13,10 +13,15 @@ import { ToastContainer, toast } from 'react-toastify';
 const JobType=()=>{
   const[values,setValues]=useState({})
   const[visible,setVisible]=useState(false)
-  const[model,setModel]=useState({});
+  const[model,setModel]=useState({
+    PageIndex: 1,
+    PageSize: 10,
+    SORTDIR: 'desc',
+    SORTCOL: 'jobTypeId',
+    SEARCHSTRING: ''
+  });
     const[data,setData]=useState([]);
     const[totalCount,setTotalCount]=useState(1);
-    const sort= {column:'jobTypeId',direction:'desc'};
     function Add(){
       setVisible(true)
   }
@@ -147,7 +152,8 @@ const JobType=()=>{
 <CustomDataTable 
 columns={columns}
 rows={data}
-sortModel={sort}
+model={model}
+setModel={setModel}
 TotalCount={totalCount}
 actionField='jobTypeId'
 OnPaginationChange={handlePageChange}

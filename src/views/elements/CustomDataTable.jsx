@@ -1,16 +1,16 @@
-import { useState,useEffect } from 'react';
+import React,{ useState,useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { TextField } from '@mui/material';
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import DeleteConfirmDialog from './DeleteConfirmDialog';
 const CustomDataTable=(props)=>{
-    const { sortModel, rows,columns,loading,TotalCount,actionField,
-        OnPaginationChange ,OnEditConfirm,OnDeleteConfirm
+    const { model,setModel, rows,columns,loading,TotalCount,actionField,
+         OnEditConfirm,OnDeleteConfirm
     } = props;
-    const [searchTerm, setSearchTerm] = useState('');
-    const [pagingConfig, setPagingConfig] = useState({ page:1, pageSize: 10 });
-    const [sortConfig, setSortConfig] = useState({ column: sortModel.column, state: sortModel.direction });
-    const newData = [...columns];
+    // const [searchTerm, setSearchTerm] = useState('');
+    // const [pagingConfig, setPagingConfig] = useState({ page:1, pageSize: 10 });
+    // const [sortConfig, setSortConfig] = useState({ column: sortModel.column, state: sortModel.direction });
+     const newData = [...columns];
     const objAction= {
            field: actionField,
            headerName: 'Action',
@@ -29,33 +29,40 @@ const CustomDataTable=(props)=>{
              },
          }
          newData.push(objAction);
-    useEffect(() => {
-        const PaginationRequest = {
-            PageIndex: pagingConfig.page,
-            PageSize: pagingConfig.pageSize,
-            SORTDIR: sortConfig.state,
-            SORTCOL: sortConfig.column,
-            SEARCHSTRING: searchTerm
-        };
-        OnPaginationChange(PaginationRequest);  // Call SendValues with updated PaginationRequest
-    }, [sortConfig, pagingConfig, searchTerm]);
+    // useEffect(() => {
+    //     const PaginationRequest = {
+    //         PageIndex: pagingConfig.page,
+    //         PageSize: pagingConfig.pageSize,
+    //         SORTDIR: sortConfig.state,
+    //         SORTCOL: sortConfig.column,
+    //         SEARCHSTRING: searchTerm
+    //     };
+    //     OnPaginationChange(PaginationRequest); 
+    // }, [sortConfig, pagingConfig, searchTerm]);
+  //   useEffect(() => {
+  //     OnPaginationChange(model);  
+  // }, [model, OnPaginationChange]);
     const handleSortChange = (item) => {
         var sColumn=item[0].field;
         var sDirection=item[0].sort;
-        const validDirection = sDirection === 'asc' || sDirection === 'desc' ? sDirection: 'asc';
-        setSortConfig({
-          column:sColumn,
-          state:validDirection
-        }); 
+        setModel(prevModel => ({
+          ...prevModel,
+          SORTCOL: sColumn,
+          SORTDIR: sDirection
+        }));
   };
   const handlePageModelChange=(item)=>{
-    setPagingConfig({
-      page:item.page+1,
-      pageSize:item.pageSize
-    });
+    setModel(prevModel => ({
+      ...prevModel,
+      PageSize: item.pageSize,
+      PageIndex: item.page + 1
+    }));
   }
   const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
+    setModel(prevModel => ({
+      ...prevModel,
+      SEARCHSTRING: event.target.value  // Remove extra []
+    }));
   };
   function handleDeleteClick(type,Id){
      OnDeleteConfirm(type,Id)
@@ -67,7 +74,7 @@ const CustomDataTable=(props)=>{
         <>
               <div className='row d-flex flex-reverse justify-content-end'>
           <div className='col-lg-4'>
-          <TextField  label="Search" value={searchTerm} onChange={handleSearchChange}/>
+          <TextField  label="Search" name='SEARCHSTRING' value={model.SEARCHSTRING} onChange={handleSearchChange}/>
           </div>
         
         </div>
@@ -84,7 +91,10 @@ const CustomDataTable=(props)=>{
                 sortingOrder={['asc', 'desc']}
                 initialState={{
                   pagination: {
-                    paginationModel:pagingConfig
+                    paginationModel:{
+                      page:model?.PageIndex||1,
+                      pageSize:model?.PageSize||10
+                    }
                   },
                 }}
                 onPaginationModelChange={handlePageModelChange}
@@ -107,4 +117,4 @@ const CustomDataTable=(props)=>{
         </>
     )
 }
-export default CustomDataTable;
+export default React.memo(CustomDataTable);

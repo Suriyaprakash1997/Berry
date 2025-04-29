@@ -16,10 +16,15 @@ const LeaveType=()=>{
       leaveAllowPerMonth: 0,
       totalLeaveProvide: 0,
     })
-      const[model,setModel]=useState({});
+    const[model,setModel]=useState({
+      PageIndex: 1,
+      PageSize: 10,
+      SORTDIR: 'desc',
+      SORTCOL: 'leaveTypeId',
+      SEARCHSTRING: ''
+    });
       const[data,setData]=useState([]);
       const[totalCount,setTotalCount]=useState(1);
-      const sort= {column:'leaveTypeId',direction:'desc'};
       function Add(){
         setVisible(true)
     }
@@ -144,7 +149,8 @@ return(
 <CustomDataTable 
 columns={columns}
 rows={data}
-sortModel={sort}
+model={model}
+setModel={setModel}
 TotalCount={totalCount}
 actionField='leaveTypeId'
 OnPaginationChange={handlePageChange}

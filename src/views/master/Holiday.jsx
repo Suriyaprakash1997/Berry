@@ -15,12 +15,18 @@ const[visible,setVisible]=useState(false)
 const initialValue={
     holidayId:0,
     holidayName:'',
-    holidayDate:dayjs(date)
+    holidayDate:dayjs(date),
+    pono:""
   }
-  const[model,setModel]=useState({});
+  const[model,setModel]=useState({
+    PageIndex: 1,
+    PageSize: 10,
+    SORTDIR: 'desc',
+    SORTCOL: 'holidayId',
+    SEARCHSTRING: ''
+  });
   const[data,setData]=useState([]);
   const[totalCount,setTotalCount]=useState(1);
-  const sort= {column:'holidayId',direction:'desc'};
      const formik = useFormik({
           initialValues: initialValue,
           validationSchema: holidayValidator,
@@ -171,7 +177,8 @@ onClick={() => Cancel()}
 <CustomDataTable 
 columns={columns}
 rows={data}
-sortModel={sort}
+model={model}
+setModel={setModel}
 TotalCount={totalCount}
 actionField='holidayId'
 OnPaginationChange={handlePageChange}

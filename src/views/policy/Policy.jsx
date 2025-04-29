@@ -29,9 +29,14 @@ const Policy=()=>{
       policyId:0,
       policyName: ''
     }
-    const[model,setModel]=useState({});
+    const[model,setModel]=useState({
+      PageIndex: 1,
+      PageSize: 10,
+      SORTDIR: 'desc',
+      SORTCOL: 'policyId',
+      SEARCHSTRING: ''
+    });
     const[totalCount,setTotalCount]=useState(1);
-    const sort= {column:'policyId',direction:'desc'};
            const formik = useFormik({
                   initialValues: { policyId:0,policyName: ''},
                   validationSchema: validationSchema,
@@ -203,7 +208,8 @@ const Policy=()=>{
                 <CustomDataTable 
 columns={columns}
 rows={data}
-sortModel={sort}
+model={model}
+setModel={setModel}
 TotalCount={totalCount}
 actionField='policyId'
 OnPaginationChange={handlePageChange}

@@ -17,9 +17,16 @@ const User=()=>{
     const[visible,setVisible]=useState(false)
  const[data,setData]=useState([])
  const[roleDropdown,setRoleDropdown]=useState([])
- const[model,setModel]=useState({});
+     const[model,setModel]=useState({
+       PageIndex: 1,
+       PageSize: 10,
+       SORTDIR: 'desc',
+       SORTCOL: 'userId',
+       SEARCHSTRING: ''
+     });
+//  const[model,setModel]=useState({});
  const[totalCount,setTotalCount]=useState(1);
- const sort= {column:'userId',direction:'desc'};
+//  const sort= {column:'userId',direction:'desc'};
      const initialValue={
          roleId:0,
          userName:'',
@@ -209,7 +216,8 @@ helperText={formik.touched.roleId && formik.errors.roleId}  />
                 <CustomDataTable 
 columns={columns}
 rows={data}
-sortModel={sort}
+model={model}
+setModel={setModel}
 TotalCount={totalCount}
 actionField='userId'
 OnPaginationChange={handlePageChange}

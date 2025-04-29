@@ -12,16 +12,20 @@ import {roleValidator} from '../../validation/UserValidation'
 const Role=()=>{
     const[visible,setVisible]=useState(false)
     const[data,setData]=useState([])
-    const[model,setModel]=useState({});
+    const[model,setModel]=useState({
+      PageIndex: 1,
+      PageSize: 10,
+      SORTDIR: 'desc',
+      SORTCOL: 'roleId',
+      SEARCHSTRING: ''
+    });
     const[totalCount,setTotalCount]=useState(1);
-    const sort= {column:'roleId',direction:'desc'};
     const initialValue={
         roleId:0,
         roleName: '',
       }
-      const [values,setValues]=useState(initialValue)
           const formik = useFormik({
-              initialValues: values,
+              initialValues: initialValue,
               validationSchema: roleValidator,
               onSubmit: (values) => {
                 SaveRole(values);
@@ -55,8 +59,8 @@ const Role=()=>{
     useEffect(()=>{
       GetList();
       },[model])
-    function GetList(){
-        GetPagination(model)
+    async function GetList(){
+        await GetPagination(model)
         .then((res)=>{
             var data=res.data;
             setData(data.rows)
@@ -66,9 +70,6 @@ const Role=()=>{
             console.log("Error:",error); 
         })
     }
-    function handlePageChange(model){
-             setModel(model)
-      }
        const handleDeleteClick=(type,Id)=>{
               if(type==="Yes"){
             Delete(Id)
@@ -146,10 +147,10 @@ const Role=()=>{
         <CustomDataTable 
 columns={columns}
 rows={data}
-sortModel={sort}
+model={model}
+setModel={setModel}
 TotalCount={totalCount}
 actionField='roleId'
-OnPaginationChange={handlePageChange}
 OnEditConfirm={handleEdit}
 OnDeleteConfirm={handleDeleteClick}
   />
