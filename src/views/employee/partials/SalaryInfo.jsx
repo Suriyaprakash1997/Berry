@@ -36,16 +36,16 @@ const SalaryInfo=({ salaryInfo, setSalaryInfo })=>{
         return newData;
       }
       function Edit(Id){
-        const newData = data.find(item => item.documentId === Id); 
+        const newData = data.find(item => item.salaryDetailId === Id); 
         setFormValue(newData)
       }
       function handleDeleteClick(type,Id){
         if(type==='Yes'){
-           const selectedIndex=data.findIndex(a=>a.documentId===Id)
+           const selectedIndex=data.findIndex(a=>a.salaryDetailId===Id)
            if(selectedIndex>=0){
-            const newData = data.filter(item => item.documentId !== Id); 
+            const newData = data.filter(item => item.salaryDetailId !== Id); 
             setData(newData);
-            setDocumentInfo(newData);
+            setSalaryInfo(newData);
            }
         }
      }
@@ -107,7 +107,6 @@ const SalaryInfo=({ salaryInfo, setSalaryInfo })=>{
                    validationSchema={SalaryValidator}
                    onSubmit={(values, { resetForm }) => {
                     const updatedData = SaveSalaryDetails(values);
-                    console.log("UpdatedData:",updatedData);  
                     setFormValue(initialValues);
                     setData(updatedData); 
                     setSalaryInfo(updatedData);

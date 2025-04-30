@@ -74,7 +74,8 @@ const DocumentInfo=({ documentInfo, setDocumentInfo })=>{
           field: 'File Name',
           headerName: 'file',
           sortable:false,
-          width:200,
+          flex: 1,
+          minwidth:200,
         renderCell: (params) => {
           var files=params.row.file;
             return (
@@ -87,7 +88,19 @@ const DocumentInfo=({ documentInfo, setDocumentInfo })=>{
         {
             field: 'isVerified',
             headerName: 'Is Verified',
-            width:150
+            width:150,
+            renderCell: (params) => {
+              var isVerified=params.row.isVerified;
+                return (
+                    <>
+                    {isVerified?
+                      <Switch checked={true} disabled={true} />
+                       :
+                       <Switch checked={false} disabled={true} />
+                    }
+                    </>
+                );
+              },
           },  
       ];
     return(
@@ -98,6 +111,7 @@ const DocumentInfo=({ documentInfo, setDocumentInfo })=>{
            initialValues={formValue}
            validationSchema={DocumentValidator}
            onSubmit={(values, { resetForm }) => {
+            console.log('Form values:', values);
             const updatedData = SaveDocument(values);
             setData(updatedData); 
             setDocumentInfo(updatedData);
@@ -108,7 +122,7 @@ const DocumentInfo=({ documentInfo, setDocumentInfo })=>{
           }}
           >
 {({setFieldValue, values,setValues,resetForm})=>(
-  <Form>
+  <Form autoComplete="off">
     <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
     <input type='hidden'  name="documentId" value={values.documentId}/>
     <Grid  size={{xs: 12,sm: 12, md: 4}}>
