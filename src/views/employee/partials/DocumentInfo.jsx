@@ -15,7 +15,7 @@ const DocumentInfo=({ documentInfo, setDocumentInfo })=>{
  const initialValues = {
   documentId:0,
   documentType:'',
-file:null,
+  file:null,
   isVerified:false
   };
   const[formValue,setFormValue]=useState(initialValues)
@@ -104,7 +104,7 @@ file:null,
             if (fileInputRef.current) {
               fileInputRef.current.value = null;
             }
-            resetForm({ values: initialValues }); // Reset the form after submission
+            resetForm({ values: initialValues });
           }}
           >
 {({setFieldValue, values,setValues,resetForm})=>(

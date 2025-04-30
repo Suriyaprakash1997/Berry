@@ -27,5 +27,22 @@ export const EmergencyContactValidator = yup.object({
       .test('fileSize', 'File size is too large', (value) => {
         return value && value.size <= 5 * 1024 * 1024; // 2MB limit
       })
-   
+  });
+  export const SalaryValidator = yup.object({
+    salaryAmount:   yup.number()
+    .typeError('Please enter a valid number')
+    .required('Please enter salary amount')
+    .moreThan(0, 'salary amount must be greater than 0'),
+    professionalTax: yup.number()
+    .typeError('Please enter a valid number')
+    .required('Please enter professional tax')
+    .moreThan(0, 'professional tax must be greater than 0'),
+    revisionDate: yup
+    .date()
+    .transform((value, originalValue) =>
+      originalValue === '' ? null : value
+    )
+    .nullable()
+    .required('Revision date is required')
+    .typeError('Invalid date format'),
   });

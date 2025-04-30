@@ -1,7 +1,7 @@
 import {useState}from 'react';
 import {Box,Button,Tabs,Tab} from '@mui/material';
 import MainCard from 'ui-component/cards/MainCard';
-import BasicInfo from './partials/BasicInfo';
+import BasicInfo from './partials/basicInfo';
 import PersonalInfo from './partials/PersonalInfo';
 import EmergencyContact from './partials/EmergencyContact';
 import EducationInfo from './partials/EducationInfo';
@@ -26,7 +26,7 @@ const Employee=()=>{
     });
     const [bankInfo, setBankInfo] = useState({});
     const [documentInfo, setDocumentInfo] = useState([]);
-    const [salaryInfo, setSalaryInfo] = useState({});
+    const [salaryInfo, setSalaryInfo] = useState([]);
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
@@ -94,7 +94,7 @@ const Employee=()=>{
     <DocumentInfo documentInfo={documentInfo} setDocumentInfo={setDocumentInfo}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={6}>
-      <SalaryInfo/>
+      <SalaryInfo salaryInfo={salaryInfo} setSalaryInfo={setSalaryInfo}/>
       </CustomTabPanel>
       <div className="d-flex justify-content-end">
         {value!==0 &&(
