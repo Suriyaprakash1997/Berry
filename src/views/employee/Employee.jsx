@@ -9,6 +9,8 @@ import BankInfo from './partials/BankInfo';
 import DocumentInfo from './partials/DocumentInfo';
 import SalaryInfo from './partials/SalaryInfo';
 import CustomTabPanel from '../elements/CustomTabPanel';
+import dayjs from 'dayjs';
+import { SaveEmployee } from '../../services/Employee/EmployeeService';
   function a11yProps(index) {
     return {
       id: `simple-tab-${index}`,
@@ -55,10 +57,65 @@ const Employee=()=>{
         window.scrollTo(0, 0);
       }
     };
-    const handleSubmit=()=>{
-      var newObject={...basicInfo,...personalInfo,...bankInfo}
+    const convertFileToBase64 = (file) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
+    };
+    const handleSubmit = async()=>{
+      const documentDetails = await Promise.all(
+        documentInfo.map(async (doc) => {
+          const base64File = doc.file ? await convertFileToBase64(doc.file) : null;
+          return {
+            documentType: doc.documentType,
+            isVerified: doc.isVerified,
+            file: base64File,
+          };
+        })
+      );
+      var newObject={
+        BasicDetails:{...basicInfo,
+          dateOfJoin:dayjs(basicInfo.dateOfJoin).format('YYYY-MM-DD'),
+          loginTime:dayjs(basicInfo.loginTime).format('HH:mm'),
+          logoutTime:dayjs(basicInfo.logoutTime).format('HH:mm'),
+          graceTime:dayjs(basicInfo.graceTime).format('HH:mm'),
+          ...personalInfo,
+          dateOfBirth:dayjs(personalInfo.dateOfBirth).format('YYYY-MM-DD'),
+          passportDate:(personalInfo.dateOfBirth&&dayjs(personalInfo.dateOfBirth).format('YYYY-MM-DD')),
+          ...bankInfo,
+        },
+        EmergencyContactDetails:emergencyInfo,
+        EducationDetails:educationInfo.educationDetails,
+        ExperienceDetails:[...educationInfo.experienceDetails.map((item)=>{
+          return{
+            ...item,
+            fromDate:dayjs(item.fromDate).format('YYYY-MM-DD').toString(),
+            toDate:dayjs(item.toDate).format('YYYY-MM-DD').toString(),
+          }
+        })],
+        DocumentDetails:documentDetails,
+        SalaryDetails:[...salaryInfo.map((item)=>{
+          return{
+            ...item,
+            revisionDate:dayjs(item.revisionDate).format('YYYY-MM-DD').toString(),
+          }
+        })]
+      }
       console.log("FinalObj:",newObject);
-      
+      await handleSaveData(newObject);
+    }
+    const handleSaveData= async(values)=>{
+      const response=await SaveEmployee(values);
+
+      if(response.status===200){
+        console.log("Data saved successfully");
+      }
+      else{
+        console.log("Error in saving data");
+      }
     }
     return(
         <>

@@ -111,7 +111,6 @@ const DocumentInfo=({ documentInfo, setDocumentInfo })=>{
            initialValues={formValue}
            validationSchema={DocumentValidator}
            onSubmit={(values, { resetForm }) => {
-            console.log('Form values:', values);
             const updatedData = SaveDocument(values);
             setData(updatedData); 
             setDocumentInfo(updatedData);
