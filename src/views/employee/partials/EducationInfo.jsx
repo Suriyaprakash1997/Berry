@@ -25,8 +25,8 @@ const EducationInfo=({ educationInfo, setEducationInfo })=>{
       designation:'',
       contactNo:'',
       contactEmail:'',
-      fromDate:dayjs(date),
-      toDate:dayjs(date)
+      fromDate:null,
+      toDate:null
     }
     const formik = useFormik({
        initialValues: educationValue,

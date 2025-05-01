@@ -1,4 +1,5 @@
 import {useState}from 'react';
+import {useNavigate} from 'react-router-dom';
 import {Box,Button,Tabs,Tab} from '@mui/material';
 import MainCard from 'ui-component/cards/MainCard';
 import BasicInfo from './partials/basicInfo';
@@ -11,6 +12,7 @@ import SalaryInfo from './partials/SalaryInfo';
 import CustomTabPanel from '../elements/CustomTabPanel';
 import dayjs from 'dayjs';
 import { SaveEmployee } from '../../services/Employee/EmployeeService';
+import { ToastContainer,toast } from 'react-toastify';
   function a11yProps(index) {
     return {
       id: `simple-tab-${index}`,
@@ -18,6 +20,7 @@ import { SaveEmployee } from '../../services/Employee/EmployeeService';
     };
   }
 const Employee=()=>{
+    const navigate=useNavigate();
     const [value, setValue] = useState(0);
     const [basicInfo, setBasicInfo] = useState({});
     const [personalInfo, setPersonalInfo] = useState({});
@@ -46,9 +49,9 @@ const Employee=()=>{
       // if(value===3){
       //   console.log("educationInfo:",educationInfo);
       // }
-      if(value===5){
-        console.log("documentInfo:",documentInfo);
-      }
+      // if(value===5){
+      //   console.log("documentInfo:",documentInfo);
+      // }
     };
   
     const handleBack = () => {
@@ -104,22 +107,32 @@ const Employee=()=>{
           }
         })]
       }
-      console.log("FinalObj:",newObject);
       await handleSaveData(newObject);
     }
     const handleSaveData= async(values)=>{
       const response=await SaveEmployee(values);
+if(response){
+var data=response.data;
+if(data.status>0){
+toast.success(data.message);
+setTimeout(() => {  
+navigate('/employeeList');
+}, 2000); 
+}
+else{
+  toast.error(data.message);
+}
+}
+else{
+  toast.error("Something went wrong!");
+}
 
-      if(response.status===200){
-        console.log("Data saved successfully");
-      }
-      else{
-        console.log("Error in saving data");
-      }
+
     }
     return(
         <>
-        <MainCard title='Employee'>
+        <ToastContainer/>
+        <MainCard title='Employee'  secondary={<Button onClick={()=>navigate('/employeelist')} variant='contained'>Back</Button>}>
         <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">

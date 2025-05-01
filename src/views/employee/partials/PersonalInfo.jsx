@@ -34,7 +34,11 @@ const PersonalInfo=({ personalInfo, setPersonalInfo })=>{
         
               // Read the file as a data URL
               reader.onloadend = () => {
-                setImage(reader.result); // Set the image data URL as state
+                setImage(reader.result); 
+                setPersonalInfo({
+                  ...personalInfo,
+                  profileImage: reader.result,
+                });
               };
         
               // Start reading the file
@@ -44,6 +48,15 @@ const PersonalInfo=({ personalInfo, setPersonalInfo })=>{
           const items=[
             {value:1,text:'Admin'},
             {value:2,text:'Employee'}
+          ]
+          const jobTypes=[
+            {value:1,text:'Full Time'},
+            {value:2,text:'Part Time'},
+            {value:3,text:'Work From Home'},
+          ]
+          const marriedStatus=[
+            {value:1,text:'Married'},
+            {value:2,text:'Unmarried'},
           ]
     return (
         <>
@@ -80,12 +93,19 @@ const PersonalInfo=({ personalInfo, setPersonalInfo })=>{
         </Grid>
         <Grid size={{xs: 12,sm: 12, md: 6}}>
         <CustomSelect label='Job Type' 
-       items={items}
+       items={jobTypes}
         name='jobType'
         value={initialJobType}
        onChange={handleInputChange}/>
         </Grid>
-       
+        <Grid size={{xs: 12,sm: 12, md: 3}}>
+       <CustomFileUpload label='Upload Image'
+       name='image'
+       OnFileChange={handleFileChange}/>
+        </Grid>
+        <Grid size={{xs: 12,sm: 12, md: 3}}>
+        <img src={personalInfo.profileImage || ''} alt="Uploaded" style={{ width: '100px', height: '100px' }} />
+        </Grid>
         </Grid>
        </MainCard>
        <div className='mt-2'>
@@ -100,7 +120,7 @@ const PersonalInfo=({ personalInfo, setPersonalInfo })=>{
         </Grid>
         <Grid size={{xs: 12,sm: 12, md: 6}}>
         <CustomSelect label='Married Status' 
-       items={items}
+       items={marriedStatus}
         name='marriedStatus'
         value={initialMarried}
        onChange={handleInputChange}/>
@@ -148,6 +168,7 @@ const PersonalInfo=({ personalInfo, setPersonalInfo })=>{
            onChange={handleInputChange}
         variant="outlined" />
         </Grid>
+
         </Grid>
 </MainCard>
       </div>

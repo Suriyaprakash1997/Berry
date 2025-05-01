@@ -29,7 +29,7 @@ const UtilsShadow = Loadable(lazy(() => import('views/utilities/Shadow')));
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
-
+const CreateUserForm = Loadable(lazy(() => import('views/master/CreateUserForm')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -107,6 +107,10 @@ const MainRoutes = {
     {
       path: 'permission',
       element: <Permission />
+    },
+    {
+      path: 'userForm',
+      element: <CreateUserForm />
     },
   ]
 };
