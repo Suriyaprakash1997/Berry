@@ -57,7 +57,7 @@ const MainRoutes = {
       element: <SamplePage />
     },
     {
-      path: 'employee',
+      path: 'employee/:employeeid?',
       element: <Employee />
     },
     {

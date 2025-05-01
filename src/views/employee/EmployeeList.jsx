@@ -85,17 +85,7 @@ const navigate=useNavigate();
                   }
                  }
                 function handleEdit(id){
-                //  JobTypeService.Get(id)
-                //     .then((res)=>{
-                //       var data=res.data;
-                //       setValues(data);
-                //       setVisible(true)
-                //       window.scrollTo(0, 0);
-                //     })
-                //     .catch((error)=>{
-                //       console.log("Errors:",error);
-                                               
-                //     })
+                navigate('/employee/'+id)
                 }
     return (
         <>

@@ -10,3 +10,6 @@ export const GetPagination = (params) => {
 export const DeleteEmployee= (id) => {
     return axiosConfig.delete(`Employee/${id}`);
 };
+export const GetEmployee= (id) => {
+    return axiosConfig.get(`Employee/${id}`);
+};

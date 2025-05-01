@@ -1,5 +1,5 @@
-import {useState}from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useEffect, useState}from 'react';
+import {useNavigate,useParams} from 'react-router-dom';
 import {Box,Button,Tabs,Tab} from '@mui/material';
 import MainCard from 'ui-component/cards/MainCard';
 import BasicInfo from './partials/basicInfo';
@@ -11,7 +11,7 @@ import DocumentInfo from './partials/DocumentInfo';
 import SalaryInfo from './partials/SalaryInfo';
 import CustomTabPanel from '../elements/CustomTabPanel';
 import dayjs from 'dayjs';
-import { SaveEmployee } from '../../services/Employee/EmployeeService';
+import { SaveEmployee,GetEmployee } from '../../services/Employee/EmployeeService';
 import { ToastContainer,toast } from 'react-toastify';
   function a11yProps(index) {
     return {
@@ -21,6 +21,7 @@ import { ToastContainer,toast } from 'react-toastify';
   }
 const Employee=()=>{
     const navigate=useNavigate();
+    const{employeeid}=useParams();
     const [value, setValue] = useState(0);
     const [basicInfo, setBasicInfo] = useState({});
     const [personalInfo, setPersonalInfo] = useState({});
@@ -126,9 +127,51 @@ else{
 else{
   toast.error("Something went wrong!");
 }
-
-
+ }
+ useEffect(()=>{
+if(employeeid){
+  GetEmployeeData()
+}
+},[])
+const GetEmployeeData = () =>{
+  GetEmployee(employeeid)
+  .then((res)=>{
+    var data=res.data;
+    console.log('data:',data)
+    let basicdetails=data.basicDetails;
+    setBasicInfo({...basicdetails,
+      dateOfJoin:dayjs(basicdetails.dateOfJoin),
+      loginTime:dayjs(basicdetails.loginTime),
+      logoutTime:dayjs(basicdetails.logoutTime),
+      graceTime:dayjs(basicdetails.graceTime),
+    })
+  setPersonalInfo({...basicdetails,
+    dateOfBirth:dayjs(basicdetails.dateOfBirth),
+    passportDate:dayjs(basicdetails.passportDate)
+  })
+setBankInfo({...basicdetails})
+setEmergencyInfo(data.emergencyContactDetails)
+setEducationInfo({
+  educationDetails:data.educationDetails,
+  experienceDetails:[...data.experienceDetails.map((item)=>{
+    return{
+      ...item,
+      fromDate:dayjs(item.fromDate),
+      toDate:dayjs(item.toDate),
     }
+  })]
+})
+setSalaryInfo([...data.salaryDetails.map((item)=>{
+  return{
+    ...item,
+    revisionDate:dayjs(item.revisionDate),
+  }
+})])
+  })
+  .catch((err)=>{
+    console.log(err.message)
+  })
+}
     return(
         <>
         <ToastContainer/>
