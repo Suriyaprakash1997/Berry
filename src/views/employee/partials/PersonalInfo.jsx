@@ -9,6 +9,7 @@ import {TextField,Card,CardContent,
  import CustomDatePicker from '../../elements/CustomDatePicker';
  import CustomFileUpload from '../../elements/CustomFileUpload';
  import CustomSelect from '../../elements/CustomSelect';
+ import AvatarImage from '../../../assets/images/avatar.avif';
 const PersonalInfo=({ personalInfo, setPersonalInfo })=>{
   const [image, setImage] = useState(null);
     const date=Date.now();
@@ -104,7 +105,7 @@ const PersonalInfo=({ personalInfo, setPersonalInfo })=>{
        OnFileChange={handleFileChange}/>
         </Grid>
         <Grid size={{xs: 12,sm: 12, md: 3}}>
-        <img src={personalInfo.profileImage || ''} alt="Uploaded" style={{ width: '100px', height: '100px' }} />
+        <img src={personalInfo.profileImage || AvatarImage} alt="Uploaded" style={{ width: '100px', height: '100px' }} />
         </Grid>
         </Grid>
        </MainCard>

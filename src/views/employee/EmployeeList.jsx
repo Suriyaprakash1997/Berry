@@ -6,7 +6,7 @@ import {TextField,Switch,
     FormControlLabel,Button
  }from '@mui/material';
  import { ToastContainer,toast } from 'react-toastify';
-import { GetPagination } from '../../services/Employee/EmployeeService';
+import { GetPagination,DeleteEmployee } from '../../services/Employee/EmployeeService';
 import CustomDataTable from '../elements/CustomDataTable';
 const EmployeeList=()=>{
 const navigate=useNavigate();
@@ -65,24 +65,24 @@ const navigate=useNavigate();
                  setModel(model)
           }
            const handleDeleteClick=(type,Id)=>{
-            //       if(type==="Yes"){
-            //  JobTypeService.Delete(Id)
-            //        .then((res)=>{
-            //         var data=res.data;
-            //         if(data.status>0){
-            //           toast.success(data.message);
-            //           GetList();
-            //           }
-            //           else{
-            //             toast.error(data.message);
-            //           }
+                  if(type==="Yes"){
+             DeleteEmployee(Id)
+                   .then((res)=>{
+                    var data=res.data;
+                    if(data.status>0){
+                      toast.success(data.message);
+                      GetList();
+                      }
+                      else{
+                        toast.error(data.message);
+                      }
                     
-            //           })
-            //           .catch((error)=>{
-            //         console.log("Errors:",error);
+                      })
+                      .catch((error)=>{
+                    console.log("Errors:",error);
                     
-            //           })
-            //       }
+                      })
+                  }
                  }
                 function handleEdit(id){
                 //  JobTypeService.Get(id)
