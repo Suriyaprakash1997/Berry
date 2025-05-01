@@ -9,7 +9,7 @@ import NavigationScroll from 'layout/NavigationScroll';
 import ThemeCustomization from 'themes';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // auth provider
-
+import { UserProvider } from './hooks/useAddContext';
 // ==============================|| APP ||============================== //
 
 export default function App() {
@@ -17,7 +17,10 @@ export default function App() {
     <ThemeCustomization>
       <NavigationScroll>
         <>
-          <RouterProvider router={router} />
+        <UserProvider>
+        <RouterProvider router={router} />
+        </UserProvider>
+          
         </>
       </NavigationScroll>
     </ThemeCustomization>
