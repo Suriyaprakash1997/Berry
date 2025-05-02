@@ -7,9 +7,15 @@ export const SaveEmployee = (params) => {
 export const GetPagination = (params) => {
     return axiosConfig.get(`Employee/Pagination`, { params });
 };
+
 export const DeleteEmployee= (id) => {
     return axiosConfig.delete(`Employee/${id}`);
 };
+
 export const GetEmployee= (id) => {
     return axiosConfig.get(`Employee/${id}`);
+};
+
+export const UpdateEmployee= (id,params) => {
+    return axiosConfig.put(`Employee/${id}`,params);
 };

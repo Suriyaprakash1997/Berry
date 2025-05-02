@@ -11,7 +11,7 @@ import DocumentInfo from './partials/DocumentInfo';
 import SalaryInfo from './partials/SalaryInfo';
 import CustomTabPanel from '../elements/CustomTabPanel';
 import dayjs from 'dayjs';
-import { SaveEmployee,GetEmployee } from '../../services/Employee/EmployeeService';
+import { SaveEmployee,GetEmployee,UpdateEmployee } from '../../services/Employee/EmployeeService';
 import { ToastContainer,toast } from 'react-toastify';
   function a11yProps(index) {
     return {
@@ -23,14 +23,43 @@ const Employee=()=>{
     const navigate=useNavigate();
     const{employeeid}=useParams();
     const [value, setValue] = useState(0);
-    const [basicInfo, setBasicInfo] = useState({});
-    const [personalInfo, setPersonalInfo] = useState({});
+    const [basicInfo, setBasicInfo] = useState({
+      employeeCode: '',
+      employeeName: '',
+      designation: 0,
+      dateOfJoin: dayjs(),
+      officialEmail: '',
+      loginTime: dayjs(),
+      logoutTime: dayjs(),
+      graceTime: dayjs(),
+    });
+    const [personalInfo, setPersonalInfo] = useState({
+      personalEmail: '',
+      mobileNo: '',
+      dateOfBirth: dayjs(),
+      bloodGroup: '',
+      jobType: 0,
+      profileImage: '',
+      fatherName: '',
+      marriedStatus: 0,
+      aadharNumber: '',
+      partnerName: '',
+      passportNumber: '',
+      passportDate: dayjs(),
+      residentialAddress: '',
+      permenantAddress: '',
+    });
     const [emergencyInfo, setEmergencyInfo] = useState([]);
     const [educationInfo, setEducationInfo] = useState({
       educationDetails:[],
       experienceDetails:[]
     });
-    const [bankInfo, setBankInfo] = useState({});
+    const [bankInfo, setBankInfo] = useState({
+      bankName: '',
+      accountNumber: '',
+      ifscCode: '',
+      micrCode: '',
+    });
     const [documentInfo, setDocumentInfo] = useState([]);
     const [salaryInfo, setSalaryInfo] = useState([]);
     const handleChange = (event, newValue) => {
@@ -41,15 +70,18 @@ const Employee=()=>{
         setValue(value + 1);
         window.scrollTo(0, 0);
       }
-      // if(value==0){
-      //    console.log("basicInfo:",basicInfo);
-      // }
-      // if(value==1){
-      //   console.log("personalInfo:",personalInfo);
-      // }
+      if(value==0){
+         console.log("basicInfo:",basicInfo);
+      }
+      if(value==1){
+        console.log("personalInfo:",personalInfo);
+      }
       // if(value===3){
       //   console.log("educationInfo:",educationInfo);
       // }
+      if(value===4){
+        console.log("bankInfo:",bankInfo);
+      }
       // if(value===5){
       //   console.log("documentInfo:",documentInfo);
       // }
@@ -83,9 +115,9 @@ const Employee=()=>{
       var newObject={
         BasicDetails:{...basicInfo,
           dateOfJoin:dayjs(basicInfo.dateOfJoin).format('YYYY-MM-DD'),
-          loginTime:dayjs(basicInfo.loginTime).format('HH:mm'),
-          logoutTime:dayjs(basicInfo.logoutTime).format('HH:mm'),
-          graceTime:dayjs(basicInfo.graceTime).format('HH:mm'),
+          loginTime:dayjs(basicInfo.loginTime).format('YYYY-MM-DD HH:mm'),
+          logoutTime:dayjs(basicInfo.logoutTime).format('YYYY-MM-DD HH:mm'),
+          graceTime:dayjs(basicInfo.graceTime).format('YYYY-MM-DD HH:mm'),
           ...personalInfo,
           dateOfBirth:dayjs(personalInfo.dateOfBirth).format('YYYY-MM-DD'),
           passportDate:(personalInfo.dateOfBirth&&dayjs(personalInfo.dateOfBirth).format('YYYY-MM-DD')),
@@ -108,10 +140,17 @@ const Employee=()=>{
           }
         })]
       }
+      console.log('newObject:',newObject)
       await handleSaveData(newObject);
     }
     const handleSaveData= async(values)=>{
-      const response=await SaveEmployee(values);
+      let response;
+      if(employeeid){
+        response=await UpdateEmployee(employeeid,values);
+      }
+      else{
+        response=await SaveEmployee(values);
+      }
 if(response){
 var data=response.data;
 if(data.status>0){
@@ -139,17 +178,38 @@ const GetEmployeeData = () =>{
     var data=res.data;
     console.log('data:',data)
     let basicdetails=data.basicDetails;
-    setBasicInfo({...basicdetails,
+    setBasicInfo({
+      employeeCode: basicdetails.employeeCode,
+      employeeName: basicdetails.employeeName,
+      designation: basicdetails.designation,
+      officialEmail: basicdetails.officialEmail,
       dateOfJoin:dayjs(basicdetails.dateOfJoin),
       loginTime:dayjs(basicdetails.loginTime),
       logoutTime:dayjs(basicdetails.logoutTime),
       graceTime:dayjs(basicdetails.graceTime),
     })
-  setPersonalInfo({...basicdetails,
-    dateOfBirth:dayjs(basicdetails.dateOfBirth),
-    passportDate:dayjs(basicdetails.passportDate)
+  setPersonalInfo({
+    personalEmail: basicdetails.personalEmail,
+    mobileNo: basicdetails.mobileNo,
+    dateOfBirth: dayjs(basicdetails.dateOfBirth),
+    bloodGroup: basicdetails.bloodGroup,
+    jobType: basicdetails.jobType,
+    profileImage: basicdetails.profileImage,
+    fatherName: basicdetails.fatherName,
+    marriedStatus: basicdetails.marriedStatus,
+    aadharNumber: basicdetails.aadharNumber,
+    partnerName: basicdetails.partnerName,
+    passportNumber: basicdetails.passportNumber,
+    passportDate: dayjs(basicdetails.passportDate),
+    residentialAddress: basicdetails.residentialAddress,
+    permenantAddress: basicdetails.permenantAddress,
   })
-setBankInfo({...basicdetails})
+setBankInfo({
+  bankName: basicdetails.bankName,
+  accountNumber: basicdetails.accountNumber,
+  ifscCode: basicdetails.ifscCode,
+  micrCode: basicdetails.micrCode,
+})
 setEmergencyInfo(data.emergencyContactDetails)
 setEducationInfo({
   educationDetails:data.educationDetails,
